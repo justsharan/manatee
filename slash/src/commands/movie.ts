@@ -79,11 +79,13 @@ export default class extends SlashCommand {
 
     await ctx.defer();
 
+    // Get full details of movie
     const movieRes = await fetch(
       `https://api.themoviedb.org/3/movie/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
     );
     const movie: TMDBMovie = await movieRes.json();
 
+    // Send info about movie
     return ctx.editOriginal({
       embeds: [
         {
