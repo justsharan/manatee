@@ -1,7 +1,9 @@
 import fetch from "node-fetch";
 import {
+  ButtonStyle,
   CommandContext,
   CommandOptionType,
+  ComponentType,
   InteractionResponseFlags,
   SlashCommand,
   SlashCreator,
@@ -118,6 +120,21 @@ export default class extends SlashCommand {
           thumbnail: {
             url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
           },
+        },
+      ],
+      components: [
+        {
+          type: ComponentType.ACTION_ROW,
+          components: [
+            {
+              type: ComponentType.BUTTON,
+              style: ButtonStyle.LINK,
+              url: `https://www.themoviedb.org/movie/${movie.id}-${movie.title
+                .toLowerCase()
+                .replace(/\s/g, "-")}/watch`,
+              label: "Watch now",
+            },
+          ],
         },
       ],
     });
