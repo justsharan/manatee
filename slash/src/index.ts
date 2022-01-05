@@ -18,5 +18,5 @@ creator.on("error", console.error);
 creator
   .withServer(new FastifyServer(app))
   .registerCommandsIn(path.join(__dirname, "commands"))
-  .syncCommands()
+  .syncCommands({ deleteCommands: true })
   .startServer();
