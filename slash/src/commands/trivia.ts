@@ -2,6 +2,9 @@ import {
   ButtonStyle,
   CommandContext,
   CommandOptionType,
+  ComponentActionRow,
+  ComponentButton,
+  ComponentContext,
   ComponentType,
   SlashCommand,
   SlashCreator,
@@ -58,6 +61,65 @@ export default class extends SlashCommand {
         },
       ],
     });
+
+    creator.registerGlobalComponent("true", (interact) => {
+      // Retrieve list of previous buttons
+      const previousButtons = (
+        interact.message.components as ComponentActionRow[]
+      )[0].components as ComponentButton[];
+      // Edit the button colors in the parent message
+      interact.editParent({
+        components: [
+          {
+            type: ComponentType.ACTION_ROW,
+            components: previousButtons.map((b) => ({
+              ...b,
+              // Disable all answers
+              disabled: true,
+              // Correct answer is green, others are normal
+              style:
+                b.custom_id === "true"
+                  ? ButtonStyle.SUCCESS
+                  : ButtonStyle.SECONDARY,
+            })),
+          },
+        ],
+      });
+    });
+
+    const falseResponse = (interact: ComponentContext): void => {
+      // Retrieve list of previous buttons
+      const previousButtons = (
+        interact.message.components as ComponentActionRow[]
+      )[0].components as ComponentButton[];
+      // Edit the button colors in the parent message
+      interact.editParent({
+        components: [
+          {
+            type: ComponentType.ACTION_ROW,
+            components: previousButtons.map((b) => ({
+              ...b,
+              // Disable all answers
+              disabled: true,
+              // Chosen incorrect answer is red
+              // Correct answer is green
+              // Other answers are normal
+              style:
+                b.custom_id === interact.customID
+                  ? ButtonStyle.DESTRUCTIVE
+                  : b.custom_id === "true"
+                  ? ButtonStyle.SUCCESS
+                  : ButtonStyle.SECONDARY,
+            })),
+          },
+        ],
+      });
+    };
+
+    creator.registerGlobalComponent("1", falseResponse);
+    creator.registerGlobalComponent("2", falseResponse);
+    creator.registerGlobalComponent("3", falseResponse);
+    creator.registerGlobalComponent("4", falseResponse);
   }
 
   async run(ctx: CommandContext) {
@@ -85,10 +147,13 @@ export default class extends SlashCommand {
             // Randomize order
             .sort(() => Math.random() - 0.5)
             // Create button for answer choice
-            .map((choice: string) => ({
+            .map((choice: string, i: number) => ({
               type: ComponentType.BUTTON,
-              style: ButtonStyle.PRIMARY,
-              custom_id: String(choice === body.results[0].correct_answer),
+              style: ButtonStyle.SECONDARY,
+              custom_id:
+                choice === body.results[0].correct_answer
+                  ? "correct"
+                  : String(i),
               label: decodeURIComponent(choice),
             })),
         },
