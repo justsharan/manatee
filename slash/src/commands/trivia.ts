@@ -116,10 +116,10 @@ export default class extends SlashCommand {
       });
     };
 
+    creator.registerGlobalComponent("0", falseResponse);
     creator.registerGlobalComponent("1", falseResponse);
     creator.registerGlobalComponent("2", falseResponse);
     creator.registerGlobalComponent("3", falseResponse);
-    creator.registerGlobalComponent("4", falseResponse);
   }
 
   async run(ctx: CommandContext) {
