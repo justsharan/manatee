@@ -18,4 +18,11 @@ creator
   .registerCommandsIn(path.join(__dirname, "commands"))
   .syncCommands();
 
+// Log creator errors to console
+creator.on("warn", console.warn);
+creator.on("error", console.error);
+
+creator.on("synced", () => console.log("Synced all commands!"));
+client.on("ready", () => console.log("Discord client is ready!"));
+
 client.login(process.env.DISCORD_TOKEN);
