@@ -1,5 +1,5 @@
 {
-  "name": "manatee-slash",
+  "name": "@manatee/slash",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
