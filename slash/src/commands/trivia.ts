@@ -67,31 +67,11 @@ export default class extends SlashCommand {
     if (ctx.options.difficulty)
       params.set("difficulty", ctx.options.difficulty);
 
-    console.log(`https://opentdb.com/api.php?${params.toString()}`);
-
     // Retrieve question from database
     const response = await fetch(
       `https://opentdb.com/api.php?${params.toString()}`
     );
     const body = (await response.json()) as { results: [TriviaQuestion] };
-    console.log([
-      {
-        type: ComponentType.ACTION_ROW,
-        components: [
-          body.results[0].correct_answer,
-          ...body.results[0].incorrect_answers,
-        ]
-          // Randomize order
-          .sort(() => Math.random() - 0.5)
-          // Create button for answer choice
-          .map((choice: string) => ({
-            type: ComponentType.BUTTON,
-            style: ButtonStyle.PRIMARY,
-            custom_id: String(choice === body.results[0].correct_answer),
-            label: decodeURIComponent(choice),
-          })),
-      },
-    ]);
 
     // Send question to user
     return ctx.send(decodeURIComponent(body.results[0].question), {
