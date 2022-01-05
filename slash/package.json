@@ -10,7 +10,6 @@
     "dev": "nodemon dist/index.js"
   },
   "dependencies": {
-    "discord.js": "^13.5.0",
     "fastify": "^3.25.3",
     "node-fetch": "2",
     "slash-create": "^5.0.1"
