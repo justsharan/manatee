@@ -2,7 +2,7 @@ import fastify from "fastify";
 import path from "path/posix";
 import { FastifyServer, SlashCreator } from "slash-create";
 
-const app = fastify();
+const app = fastify({ logger: true });
 
 // Initialize Slash creator (to handle interactions)
 const creator = new SlashCreator({

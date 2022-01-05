@@ -107,7 +107,7 @@ export default class extends SlashCommand {
               style:
                 b.custom_id === interact.customID
                   ? ButtonStyle.DESTRUCTIVE
-                  : b.custom_id === "true"
+                  : b.custom_id === "correct"
                   ? ButtonStyle.SUCCESS
                   : ButtonStyle.SECONDARY,
             })),
