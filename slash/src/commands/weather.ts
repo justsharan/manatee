@@ -6,7 +6,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { EmbedBuilder } from "src/structures/EmbedBuilder";
+import { EmbedBuilder } from "../structures/EmbedBuilder";
 
 const WEATHER_URL = `https://api.weatherapi.com/v1/forecast.json?key=${process.env.WEATHERAPI_KEY}&days=1`;
 
@@ -51,19 +51,31 @@ export default class extends SlashCommand {
     }
 
     const { location, current, forecast } = await res.json();
+    const { astro, day } = forecast.forecastday[0];
 
     // Make basic embed with all values that don't change
     const baseEmbed = new EmbedBuilder()
       .URL(`https://darksky.net/forecast/${location.lat},${location.lon}/`)
       .thumbnail(`https:${current.condition.icon}`)
       .footer(`Conditions in ${location.name}, ${location.region}`)
-      .field("☀️ Sunrise", forecast.forecastday[0].astro.sunrise, true)
-      .field(
-        `:${moonPhaseEmoji(forecast.forecastday[0].astro.moon_phase)}: Sunset`,
-        forecast.forecastday[0].astro.sunset,
-        true
-      )
+      .field("☀️ Sunrise", astro.sunrise, true)
+      .field(`:${moonPhaseEmoji(astro.moon_phase)}: Sunset`, astro.sunset, true)
       .blankField(true);
+
+    // Add rain and snow forecast
+    if (day.daily_chance_of_rain !== 0) {
+      baseEmbed.description(
+        `There is a ${day.daily_chance_of_rain}% chance of rain${
+          day.daily_chance_of_snow === 0
+            ? "."
+            : ` and a ${day.daily_chance_of_snow}% chance of snow.`
+        }`
+      );
+    } else if (day.daily_chance_of_snow !== 0) {
+      baseEmbed.description(
+        `There is a ${day.daily_chance_of_snow}% chance of snow.`
+      );
+    }
 
     if (ctx.options.units && ctx.options.units === "metric") {
       // Send data in metric if user requests it
