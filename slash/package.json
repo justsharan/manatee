@@ -10,6 +10,7 @@
     "dev": "nodemon dist/index.js"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
     "fastify": "^3.25.3",
     "node-fetch": "2",
     "slash-create": "^5.0.1"
