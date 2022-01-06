@@ -1,4 +1,4 @@
-import { MessageEmbedOptions } from "slash-create";
+import { MessageEmbedOptions, MessageOptions } from "slash-create";
 
 export class EmbedBuilder {
   constructor(private base: MessageEmbedOptions = {}) {}
@@ -64,7 +64,7 @@ export class EmbedBuilder {
     return this.base;
   }
 
-  toJSONArr(): MessageEmbedOptions[] {
-    return [this.base];
+  toMessage(): MessageOptions {
+    return { embeds: [this.base] };
   }
 }

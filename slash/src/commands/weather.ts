@@ -79,24 +79,24 @@ export default class extends SlashCommand {
 
     if (ctx.options.units && ctx.options.units === "metric") {
       // Send data in metric if user requests it
-      return ctx.send({
-        embeds: baseEmbed
+      return ctx.send(
+        baseEmbed
           .title(`${current.temp_c}°C, ${current.condition.text}`)
           .field("Wind", `${current.wind_kph} kph ${current.wind_dir}`, true)
           .field("Humidity", `${current.humidity}%`, true)
           .field("Visibility", `${current.vis_km} km`, true)
-          .toJSONArr(),
-      });
+          .toMessage()
+      );
     } else {
       // Send data in imperial by default
-      return ctx.send({
-        embeds: baseEmbed
+      return ctx.send(
+        baseEmbed
           .title(`${current.temp_f}°F, ${current.condition.text}`)
           .field("Wind", `${current.wind_mph} mph ${current.wind_dir}`, true)
           .field("Humidity", `${current.humidity}%`, true)
           .field("Visibility", `${current.vis_miles} mi`, true)
-          .toJSONArr(),
-      });
+          .toMessage()
+      );
     }
   }
 }

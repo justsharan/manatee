@@ -6,6 +6,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
+import { EmbedBuilder } from "../structures/EmbedBuilder";
 
 interface UrbanTerm {
   definition: string;
@@ -17,6 +18,15 @@ interface UrbanTerm {
   written_on: string;
   example: string;
   thumbs_down: number;
+}
+
+function formatDefinition(def: string): string {
+  return def.replace(/\[(.*?)\]/g, (term) => {
+    const sliced = term.slice(1, -1);
+    return `[${sliced}](https://www.urbandictionary.com/define.php?term=${encodeURIComponent(
+      sliced
+    )})`;
+  });
 }
 
 export default class extends SlashCommand {
@@ -52,21 +62,15 @@ export default class extends SlashCommand {
     const [entry] = body.list;
 
     // Send info about the first word
-    return ctx.send({
-      embeds: [
-        {
-          title: entry.word,
-          url: entry.permalink,
-          author: {
-            name: entry.author,
-          },
-          description: entry.definition,
-          footer: {
-            text: `👍 ${entry.thumbs_up} 👎 ${entry.thumbs_down}`,
-          },
-          timestamp: entry.written_on,
-        },
-      ],
-    });
+    return ctx.send(
+      new EmbedBuilder()
+        .title(entry.word)
+        .URL(entry.permalink)
+        .author(entry.author)
+        .description(formatDefinition(entry.definition))
+        .footer(`👍 ${entry.thumbs_up} 👎 ${entry.thumbs_down}`)
+        .timestamp(entry.written_on)
+        .toMessage()
+    );
   }
 }
