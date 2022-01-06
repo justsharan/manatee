@@ -35,7 +35,6 @@ export default class extends SlashCommand {
     super(creator, {
       name: "cat",
       description: "View clips of cats... what else?",
-      guildIDs: ["656271376638017556"],
     });
 
     creator.registerGlobalComponent("new_cat", async (interact) => {
