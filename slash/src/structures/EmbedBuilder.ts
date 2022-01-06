@@ -33,7 +33,7 @@ export class EmbedBuilder {
     return this;
   }
 
-  footer(text: string, icon: string): EmbedBuilder {
+  footer(text: string, icon?: string): EmbedBuilder {
     this.base.footer = { text, icon_url: icon };
     return this;
   }
@@ -62,5 +62,9 @@ export class EmbedBuilder {
 
   toJSON(): MessageEmbedOptions {
     return this.base;
+  }
+
+  toJSONArr(): MessageEmbedOptions[] {
+    return [this.base];
   }
 }
