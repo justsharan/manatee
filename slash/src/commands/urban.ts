@@ -20,12 +20,12 @@ interface UrbanTerm {
   thumbs_down: number;
 }
 
+const URBAN_URL = "https://www.urbandictionary.com/define.php";
+
 function formatDefinition(def: string): string {
   return def.replace(/\[(.*?)\]/g, (term) => {
     const sliced = term.slice(1, -1);
-    return `[${sliced}](https://www.urbandictionary.com/define.php?term=${encodeURIComponent(
-      sliced
-    )})`;
+    return `[${sliced}](${URBAN_URL}?term=${encodeURIComponent(sliced)})`;
   });
 }
 
