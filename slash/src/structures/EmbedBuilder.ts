@@ -46,6 +46,10 @@ export class EmbedBuilder {
     return this;
   }
 
+  blankField(inline = false): EmbedBuilder {
+    return this.field("\u200B", "\u200B", inline);
+  }
+
   image(url: string): EmbedBuilder {
     this.base.image = { url };
     return this;
