@@ -34,6 +34,9 @@ interface TMDBMovie {
   vote_count: number;
 }
 
+const TMDB_API_URL = "https://api.themoviedb.org/3/search/movie";
+const TMDB_API_MOVIE_URL = "https://api.themoviedb.org/3/movie";
+
 export default class extends SlashCommand {
   constructor(creator: SlashCreator) {
     super(creator, {
@@ -64,9 +67,7 @@ export default class extends SlashCommand {
     if (ctx.options.year) params.set("year", String(ctx.options.year));
 
     // Find movie
-    const res = await fetch(
-      `https://api.themoviedb.org/3/search/movie?${params.toString()}`
-    );
+    const res = await fetch(`${TMDB_API_URL}?${params.toString()}`);
     const body: { results: { id: number }[] } = await res.json();
 
     // Send message if no movie was found.
@@ -83,7 +84,7 @@ export default class extends SlashCommand {
 
     // Get full details of movie
     const movieRes = await fetch(
-      `https://api.themoviedb.org/3/movie/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
+      `${TMDB_API_MOVIE_URL}/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
     );
     const movie: TMDBMovie = await movieRes.json();
 

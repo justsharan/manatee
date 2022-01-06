@@ -21,6 +21,7 @@ interface UrbanTerm {
 }
 
 const URBAN_URL = "https://www.urbandictionary.com/define.php";
+const URBAN_API_URL = "https://api.urbandictionary.com/v0/define";
 
 function formatDefinition(def: string): string {
   return def.replace(/\[(.*?)\]/g, (term) => {
@@ -47,14 +48,13 @@ export default class extends SlashCommand {
 
   async run(ctx: CommandContext) {
     // Find term on urban dictionary
-    const res = await fetch(
-      `https://api.urbandictionary.com/v0/define?term=${ctx.options.term}`
-    );
+    const res = await fetch(`${URBAN_API_URL}?term=${ctx.options.term}`);
     const body: { list: UrbanTerm[] } = await res.json();
 
     // Check that there are results
     if (!body.list.length) {
-      return ctx.send("There's no word by that name.", {
+      return ctx.send({
+        content: "There's no word by that name.",
         flags: InteractionResponseFlags.EPHEMERAL,
       });
     }

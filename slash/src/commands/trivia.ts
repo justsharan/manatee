@@ -20,6 +20,8 @@ interface TriviaQuestion {
   incorrect_answers: string[];
 }
 
+const TRIVIA_API_URL = "https://opentdb.com/api.php";
+
 export default class extends SlashCommand {
   constructor(creator: SlashCreator) {
     super(creator, {
@@ -62,7 +64,7 @@ export default class extends SlashCommand {
       ],
     });
 
-    creator.registerGlobalComponent("true", (interact) => {
+    creator.registerGlobalComponent("correct", (interact) => {
       // Retrieve list of previous buttons
       const previousButtons = (
         interact.message.components as ComponentActionRow[]
@@ -78,7 +80,7 @@ export default class extends SlashCommand {
               disabled: true,
               // Correct answer is green, others are normal
               style:
-                b.custom_id === "true"
+                b.custom_id === "correct"
                   ? ButtonStyle.SUCCESS
                   : ButtonStyle.SECONDARY,
             })),
@@ -130,9 +132,7 @@ export default class extends SlashCommand {
       params.set("difficulty", ctx.options.difficulty);
 
     // Retrieve question from database
-    const response = await fetch(
-      `https://opentdb.com/api.php?${params.toString()}`
-    );
+    const response = await fetch(`${TRIVIA_API_URL}?${params.toString()}`);
     const body: { results: [TriviaQuestion] } = await response.json();
 
     // Send question to user

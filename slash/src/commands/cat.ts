@@ -8,6 +8,8 @@ import {
   SlashCreator,
 } from "slash-create";
 
+const CAT_API_URL = "https://api.thecatapi.com/v1/images/search";
+
 const CAT_COMPONENTS: ComponentActionRow[] = [
   {
     type: ComponentType.ACTION_ROW,
@@ -25,7 +27,7 @@ const CAT_COMPONENTS: ComponentActionRow[] = [
 
 // Get a new cat image
 async function getCat(): Promise<string> {
-  const res = await fetch("https://api.thecatapi.com/v1/images/search");
+  const res = await fetch(CAT_API_URL);
   const [data] = await res.json();
   return data.url;
 }
