@@ -72,12 +72,10 @@ export default class extends SlashCommand {
 
     // Send message if no movie was found.
     if (!body.results.length) {
-      return ctx.send(
-        "There's no movie by that name (in that year, if specified).",
-        {
-          flags: InteractionResponseFlags.EPHEMERAL,
-        }
-      );
+      return ctx.send({
+        content: "There's no movie by that name (in that year, if specified).",
+        flags: InteractionResponseFlags.EPHEMERAL,
+      });
     }
 
     await ctx.defer();

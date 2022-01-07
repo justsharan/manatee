@@ -136,7 +136,8 @@ export default class extends SlashCommand {
     const body: { results: [TriviaQuestion] } = await response.json();
 
     // Send question to user
-    return ctx.send(decodeURIComponent(body.results[0].question), {
+    return ctx.send({
+      content: decodeURIComponent(body.results[0].question),
       components: [
         {
           type: ComponentType.ACTION_ROW,
