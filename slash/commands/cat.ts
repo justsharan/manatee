@@ -2,28 +2,20 @@ import fetch from "node-fetch";
 import {
   ButtonStyle,
   CommandContext,
-  ComponentActionRow,
-  ComponentType,
   SlashCommand,
   SlashCreator,
 } from "slash-create";
+import { ActionRow, Button } from "../utils/ComponentBuilder";
 
 const CAT_API_URL = "https://api.thecatapi.com/v1/images/search";
 
-const CAT_COMPONENTS: ComponentActionRow[] = [
-  {
-    type: ComponentType.ACTION_ROW,
-    components: [
-      {
-        type: ComponentType.BUTTON,
-        style: ButtonStyle.PRIMARY,
-        custom_id: "new_cat",
-        label: "Next cat!",
-        emoji: { name: "🐱" },
-      },
-    ],
-  },
-];
+const CAT_COMPONENTS = new ActionRow(
+  new Button()
+    .style(ButtonStyle.PRIMARY)
+    .customID("new_cat")
+    .label("Next cat!")
+    .emoji("🐱")
+).toJSON();
 
 // Get a new cat image
 async function getCat(): Promise<string> {
@@ -43,7 +35,7 @@ export default class extends SlashCommand {
       // Respond with cat image
       return interact.editParent({
         content: await getCat(),
-        components: CAT_COMPONENTS,
+        components: [CAT_COMPONENTS],
       });
     });
   }
@@ -52,7 +44,7 @@ export default class extends SlashCommand {
     // Respond with cat image
     return ctx.send({
       content: await getCat(),
-      components: CAT_COMPONENTS,
+      components: [CAT_COMPONENTS],
     });
   }
 }

@@ -1,13 +1,12 @@
 import fetch from "node-fetch";
 import {
-  ButtonStyle,
   CommandContext,
   CommandOptionType,
-  ComponentType,
   InteractionResponseFlags,
   SlashCommand,
   SlashCreator,
 } from "slash-create";
+import { ActionRow, LinkButton } from "utils/ComponentBuilder";
 import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 interface TMDBMovie {
@@ -79,18 +78,15 @@ export default class extends SlashCommand {
       });
     }
 
-    console.log(`Retrieving movie ${body.results[0].id} for ${ctx.user.id}`);
-    await ctx.defer();
-
     // Get full details of movie
     const movieRes = await fetch(
       `${TMDB_API_MOVIE_URL}/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
     );
     const movie: TMDBMovie = await movieRes.json();
-    console.log(`Retrieved movie ${movie.id}!`);
 
     // Send info about movie
-    return ctx.editOriginal({
+    return ctx.send({
+      content: "",
       embeds: [
         new EmbedBuilder()
           .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
@@ -111,19 +107,15 @@ export default class extends SlashCommand {
           .toJSON(),
       ],
       components: [
-        {
-          type: ComponentType.ACTION_ROW,
-          components: [
-            {
-              type: ComponentType.BUTTON,
-              style: ButtonStyle.LINK,
-              url: `https://www.themoviedb.org/movie/${movie.id}-${movie.title
+        new ActionRow(
+          new LinkButton()
+            .link(
+              `https://www.themoviedb.org/movie/${movie.id}-${movie.title
                 .toLowerCase()
-                .replace(/\s/g, "-")}/watch`,
-              label: "Watch now",
-            },
-          ],
-        },
+                .replace(/\s/g, "-")}/watch`
+            )
+            .label("Watch Now")
+        ).toJSON(),
       ],
     });
   }
