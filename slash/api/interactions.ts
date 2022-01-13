@@ -1,11 +1,6 @@
 import path from "path";
 import { SlashCreator, VercelServer } from "slash-create";
-import Sentry, { Severity } from "@sentry/node";
-
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  tracesSampleRate: 1.0,
-});
+import { executeWebhook, inlineCodeBlock } from "../utils/funcs";
 
 // Initialize Slash creator (to handle interactions)
 export const creator = new SlashCreator({
@@ -15,33 +10,24 @@ export const creator = new SlashCreator({
 });
 
 // Log creator errors to console
-if (process.env.NODE_ENV === "production") {
-  creator.on("warn", console.warn);
-  creator.on("error", (err) =>
-    Sentry.captureException(err, (scope) => scope.setLevel(Severity.Warning))
-  );
-  creator.on("commandError", (cmd, err, ctx) => {
-    Sentry.captureException(err, (scope) =>
-      scope
-        .setUser({
-          id: ctx.user.id,
-          username: `${ctx.user.username}#${ctx.user.discriminator}`,
-        })
-        .setTag("command", cmd.commandName)
-        .setTag("guild", ctx.guildID)
-        .setContext("options", ctx.options)
-        .setLevel(Severity.Error)
-    );
-    ctx.send({
-      content: "An error occurreed while running this command.",
-      ephemeral: true,
-    });
-  });
-} else {
-  creator.on("warn", console.warn);
-  creator.on("error", console.error);
-  creator.on("commandError", (_, err) => console.error(err));
-}
+creator.on("warn", console.warn);
+creator.on("error", console.error);
+creator.on("commandError", (_, err) => console.error(err));
+creator.on("commandRun", (cmd, _, ctx) =>
+  executeWebhook(process.env.LOG_HOOK!, {
+    content: `
+**Action**: ${inlineCodeBlock(
+      ctx.user.username + "#" + ctx.user.discriminator
+    )} (${inlineCodeBlock(ctx.user.id)}) executed the ${inlineCodeBlock(
+      cmd.commandName
+    )} command.
+**Options**: ${Object.entries(ctx.options)
+      .map(([k, v]) => `${k}:${inlineCodeBlock(v)}`)
+      .join(", ")}
+**Time**: <t:${Math.round(Date.now() / 1000)}>
+    `,
+  })
+);
 
 creator
   .withServer(new VercelServer())
