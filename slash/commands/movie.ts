@@ -8,6 +8,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
+import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 interface TMDBMovie {
   adult: boolean;
@@ -78,6 +79,7 @@ export default class extends SlashCommand {
       });
     }
 
+    console.log(`Retrieving movie ${body.results[0].id} for ${ctx.user.id}`);
     await ctx.defer();
 
     // Get full details of movie
@@ -85,41 +87,28 @@ export default class extends SlashCommand {
       `${TMDB_API_MOVIE_URL}/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
     );
     const movie: TMDBMovie = await movieRes.json();
+    console.log(`Retrieved movie ${movie.id}!`);
 
     // Send info about movie
     return ctx.editOriginal({
       embeds: [
-        {
-          title: `${movie.title} (${movie.release_date.slice(0, 4)})`,
-          url: `https://www.imdb.com/title/${movie.imdb_id}`,
-          description: movie.overview ?? "",
-          fields: [
-            {
-              name: "Genres",
-              value: movie.genres.map((g) => g.name).join(", "),
-              inline: true,
-            },
-            {
-              name: "Length",
-              value: `${movie.runtime} min`,
-              inline: true,
-            },
-            {
-              name: "Box Office",
-              value: movie.revenue.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-              }),
-              inline: true,
-            },
-          ],
-          image: {
-            url: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
-          },
-          thumbnail: {
-            url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-          },
-        },
+        new EmbedBuilder()
+          .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
+          .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
+          .description(movie.overview ?? "")
+          .field("Genres", movie.genres.map((g) => g.name).join(", "), true)
+          .field("Length", `${movie.runtime} min`, true)
+          .field(
+            "Box Office",
+            movie.revenue.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            }),
+            true
+          )
+          .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
+          .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
+          .toJSON(),
       ],
       components: [
         {

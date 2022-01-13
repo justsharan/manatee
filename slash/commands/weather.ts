@@ -6,7 +6,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { EmbedBuilder } from "../structures/EmbedBuilder";
+import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 const WEATHER_URL = `https://api.weatherapi.com/v1/forecast.json?key=${process.env.WEATHERAPI_KEY}&days=1`;
 

@@ -7,7 +7,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { EmbedBuilder } from "../structures/EmbedBuilder";
+import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 const FLIGHT_URL = "https://www.flightview.com/flight-tracker";
 

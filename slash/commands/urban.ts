@@ -6,7 +6,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { EmbedBuilder } from "../structures/EmbedBuilder";
+import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 interface UrbanTerm {
   definition: string;

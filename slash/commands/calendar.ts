@@ -5,7 +5,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { codeBlock } from "../util";
+import { codeBlock } from "../utils/funcs";
 
 export default class extends SlashCommand {
   constructor(creator: SlashCreator) {
