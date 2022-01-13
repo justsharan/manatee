@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@discordjs/collection@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.3.2.tgz#3c271dd8a93dad89b186d330e24dbceaab58424a"
-  integrity sha512-dMjLl60b2DMqObbH1MQZKePgWhsNe49XkKBZ0W5Acl5uVV43SN414i2QfZwRI7dXAqIn8pEWD2+XXQFn9KWxqg==
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -805,12 +800,11 @@ signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.6.tgz#24e630c4b0f03fea446a2bd299e62b4a6ca8d0af"
   integrity sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==
 
-slash-create@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/slash-create/-/slash-create-5.0.1.tgz#074c182c09d0fbd4c59aceeedb77edb8a7769f0a"
-  integrity sha512-JxOAWuoXH38rvths7rhVGhSeI73eG82ckZu9Db3YxAEEDXsC1yy0iRyJt9VfhiO0DvIgtH/D6tbPPpV0GLC7Kw==
+slash-create@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/slash-create/-/slash-create-5.0.3.tgz#c1288dff43876c74c24d25e7b5bb01f28c1f7ff8"
+  integrity sha512-ge0HDaiAe1kLyxKRtizeKJZY0mMPApDWrDYE2dBWfbeh/An/Adhfrt49T1GB1IHT67WwVQi7tFf9+WvhOuEmBQ==
   dependencies:
-    "@discordjs/collection" "^0.3.2"
     eventemitter3 "^4.0.7"
     lodash.isequal "^4.5.0"
     tweetnacl "^1.0.3"
