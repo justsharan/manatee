@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
   creator.on("error", (err) =>
     Sentry.captureException(err, (scope) => scope.setLevel(Severity.Warning))
   );
-  creator.on("commandError", (cmd, err, ctx) =>
+  creator.on("commandError", (cmd, err, ctx) => {
     Sentry.captureException(err, (scope) =>
       scope
         .setUser({
@@ -31,8 +31,12 @@ if (process.env.NODE_ENV === "production") {
         .setTag("guild", ctx.guildID)
         .setContext("options", ctx.options)
         .setLevel(Severity.Error)
-    )
-  );
+    );
+    ctx.send({
+      content: "An error occurreed while running this command.",
+      ephemeral: true,
+    });
+  });
 } else {
   creator.on("warn", console.warn);
   creator.on("error", console.error);
