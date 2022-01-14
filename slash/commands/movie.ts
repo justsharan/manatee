@@ -6,7 +6,7 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import { ActionRow, LinkButton } from "utils/ComponentBuilder";
+import { ActionRow, LinkButton } from "../utils/ComponentBuilder";
 import { EmbedBuilder } from "../utils/EmbedBuilder";
 
 interface TMDBMovie {
