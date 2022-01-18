@@ -11,9 +11,8 @@ import { EmbedBuilder } from "../utils/EmbedBuilder";
 const WEATHER_URL = `https://api.weatherapi.com/v1/forecast.json?key=${process.env.WEATHERAPI_KEY}&days=1`;
 
 function moonPhaseEmoji(phase: string): string {
-  return (phase.includes("moon") ? phase : `${phase} moon`)
-    .toLowerCase()
-    .replace(/\s/g, "_");
+  phase = phase.toLowerCase();
+  return (phase.includes("moon") ? phase : `${phase} moon`).replace(/\s/g, "_");
 }
 
 export default class extends SlashCommand {
