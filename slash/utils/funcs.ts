@@ -21,3 +21,7 @@ export function executeWebhook(url: string, body: object): Promise<Response> {
     body: JSON.stringify(body),
   });
 }
+
+export function random<T = any>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
