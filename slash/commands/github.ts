@@ -48,10 +48,10 @@ export default class extends SlashCommand {
               body.owner.avatar_url,
               `https://github.com/${body.owner.login}`
             )
+            .field("Clone URL", codeBlock(`git clone ${body.git_url}`))
             .field("Language", body.language, true)
             .field("License", body.license ? body.license.name : "None", true)
             .field("Stars", `⭐️ ${body.stargazers_count}`, true)
-            .field("Clone", codeBlock(`git clone ${body.git_url}`))
             .footer("Last updated")
             .timestamp(body.updated_at)
             .description(body.description ?? "No description")
@@ -59,7 +59,7 @@ export default class extends SlashCommand {
         : new EmbedBuilder()
             .title(body.name)
             .URL(`https://github.com/${body.login}`)
-            .image(body.avatar_url)
+            .thumbnail(body.avatar_url)
             .description(body.bio ?? "This person has no bio.")
             .field(
               "Location",
