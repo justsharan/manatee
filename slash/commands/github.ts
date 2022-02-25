@@ -61,11 +61,7 @@ export default class extends SlashCommand {
             .URL(`https://github.com/${body.login}`)
             .thumbnail(body.avatar_url)
             .description(body.bio ?? "This person has no bio.")
-            .field(
-              "Location",
-              body.location ? `📍 ${body.location}` : "Unknown",
-              true
-            )
+            .field("Location", `📍 ${body.location ?? "Earth"}`, true)
             .field("Blog", body.blog ?? "Unknown", true)
             .field(
               "Stats",
