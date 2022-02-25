@@ -14,10 +14,11 @@ export default class extends SlashCommand {
 
   async run(ctx: CommandContext) {
     const res = await fetch(EARTH_URL);
-    const post = random(await res.json());
+    const body = await res.json();
+    const post = random(body.data);
 
     return ctx.send(
-      `http://imgur.com/${post.hash}${post.ext.replace(/\?.*/, "")}`
+      `http://i.imgur.com/${post.hash}${post.ext.replace(/\?.*/, "")}`
     );
   }
 }
