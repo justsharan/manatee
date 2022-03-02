@@ -1,0 +1,32 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  height: 5em;
+  padding: 2em 5em;
+  justify-content: space-between;
+  background-color: var(--not-quite-black);
+}
+
+.navbar img {
+  height: 3em;
+  width: auto;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2em;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.userinfo img {
+  border-radius: 50%;
+  height: 2em;
+}
