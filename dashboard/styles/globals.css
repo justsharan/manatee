@@ -1,7 +1,7 @@
 :root {
-  --dark-not-black: #2c2f33;
+  --dark-not-black: rgb(47, 49, 54);
   --off-white: #f6f6f6;
-  --not-quite-black: #23272a;
+  --not-quite-black: rgb(32, 34, 37);
   --manatee: rgb(183, 226, 214);
 }
 
@@ -22,4 +22,25 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+main {
+  width: 60vw;
+  margin: 5em auto;
+}
+
+section.hero {
+  text-align: center;
+}
+
+span.manatee {
+  color: var(--manatee);
+  font-weight: bold;
+  font-size: 4em;
+}
+
+span.keyword {
+  color: var(--manatee);
+  font-weight: bold;
+  font-size: 2em;
 }
