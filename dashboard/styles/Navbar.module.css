@@ -1,8 +1,7 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  height: 3em;
-  padding: 0 2em;
+  padding: 0 5em;
   justify-content: space-between;
   background-color: var(--not-quite-black);
   flex-wrap: wrap;
@@ -30,4 +29,13 @@
 .userinfo img {
   border-radius: 50%;
   height: 2em;
+}
+
+.btn {
+  background-color: var(--manatee);
+  border-color: transparent;
+  color: var(--dark-not-black);
+  border-radius: 4px;
+  padding: calc(0.375em + 2px) 0.75em;
+  cursor: pointer;
 }
