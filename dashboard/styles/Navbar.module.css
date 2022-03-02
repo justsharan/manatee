@@ -1,14 +1,15 @@
 .navbar {
   display: flex;
   flex-direction: row;
-  height: 5em;
-  padding: 2em 5em;
+  height: 3em;
+  padding: 0 2em;
   justify-content: space-between;
   background-color: var(--not-quite-black);
+  flex-wrap: wrap;
 }
 
 .navbar img {
-  height: 3em;
+  height: 2.5em;
   width: auto;
 }
 

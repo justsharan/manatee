@@ -24,23 +24,23 @@ a {
   box-sizing: border-box;
 }
 
-main {
-  width: 60vw;
-  margin: 5em auto;
-}
-
 section.hero {
+  margin: 10em 0;
   text-align: center;
 }
 
-span.manatee {
+section.hero p {
+  margin: 0;
+}
+
+section.hero h1 {
   color: var(--manatee);
   font-weight: bold;
   font-size: 4em;
+  margin: 0;
 }
 
 span.keyword {
   color: var(--manatee);
   font-weight: bold;
-  font-size: 2em;
 }

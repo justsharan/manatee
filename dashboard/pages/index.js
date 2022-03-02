@@ -12,9 +12,10 @@ export default function Home() {
       <Navbar {...dummyUser} />
       <main>
         <section className="hero">
-          <span className="manatee">Manatee</span>
+          <h1>Manatee</h1>
           <p>
-            An awesome, easy-to-use Discord bot that's perfect for your server.
+            An <span className="keyword">awesome</span>, easy-to-use Discord bot
+            that's <span className="keyword">perfect</span> for your server.
           </p>
         </section>
       </main>
