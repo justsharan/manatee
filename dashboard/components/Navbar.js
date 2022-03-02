@@ -11,8 +11,14 @@ export default (props) => (
       <a href="/discord">Discord</a>
     </div>
     <div className={styles.userinfo}>
-      <img src={props.avatar} />
-      <p>{props.name}</p>
+      {props.user ? (
+        <>
+          <img src={props.user.avatar} />
+          <p>{props.user.name}</p>
+        </>
+      ) : (
+        <a href="/login">Login with Discord</a>
+      )}
     </div>
   </nav>
 );

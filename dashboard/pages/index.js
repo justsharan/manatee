@@ -9,7 +9,7 @@ const dummyUser = {
 export default function Home() {
   return (
     <>
-      <Navbar {...dummyUser} />
+      <Navbar user={dummyUser} />
       <main>
         <section className="hero">
           <h1>Manatee</h1>
