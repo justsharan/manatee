@@ -1,4 +1,4 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import styles from "./Navbar.module.css";
 
 export default () => {
@@ -17,10 +17,19 @@ export default () => {
         {data ? (
           <>
             <img src={data.user.image} />
-            <p>{data.user.name}</p>
+            <a href="/guilds">{data.user.name}</a>
+            <a
+              className={styles.btn}
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              Sign Out
+            </a>
           </>
         ) : (
-          <a className={styles.btn} onClick={() => signIn()}>
+          <a
+            className={styles.btn}
+            onClick={() => signIn("discord", { callbackUrl: "/guilds" })}
+          >
             Log in
           </a>
         )}
