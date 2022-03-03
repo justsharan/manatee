@@ -29,15 +29,14 @@ section.hero {
   text-align: center;
 }
 
-section.hero p {
-  margin: 0;
+.hero * {
+  margin: 5px 0;
 }
 
 section.hero h1 {
   color: var(--manatee);
   font-weight: bold;
   font-size: 4em;
-  margin: 0;
 }
 
 span.keyword {

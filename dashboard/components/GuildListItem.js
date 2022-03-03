@@ -11,4 +11,4 @@ export default (props) => (
 );
 
 const condense = (name) =>
-  name.length > 20 ? name.slice(0, 10) + "..." : name;
+  name.length > 30 ? name.slice(0, 20) + "..." : name;
