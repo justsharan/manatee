@@ -1,7 +1,7 @@
 import { signIn, useSession } from "next-auth/react";
 import styles from "./Navbar.module.css";
 
-export default function Navbar(props) {
+export default () => {
   const { data } = useSession();
   return (
     <nav className={styles.navbar}>
@@ -27,4 +27,4 @@ export default function Navbar(props) {
       </div>
     </nav>
   );
-}
+};
