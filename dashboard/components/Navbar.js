@@ -6,14 +6,16 @@ import styles from "./Navbar.module.css";
 
 export default () => {
   const { data } = useSession();
-  const { locale } = useRouter();
+  const { locale, defaultLocale } = useRouter();
+  const routeBase = locale === defaultLocale ? "/" : `/${locale}`;
+
   const t = useTranslation("common").t("navbar");
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.links}>
         <Link href="/" locale={locale}>
-          <img src="/manatee.png" />
+          <img className={styles.manatee} src="/manatee.png" />
         </Link>
         <Link href="/docs" locale={locale}>
           Docs
@@ -25,10 +27,12 @@ export default () => {
         {data ? (
           <>
             <img src={data.user.image} />
-            <a href="/guilds">{data.user.name}</a>
+            <Link href="/guilds" locale={locale}>
+              {data.user.name}
+            </Link>
             <a
               className={styles.btn}
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={() => signOut({ callbackUrl: routeBase })}
             >
               {t["log-out"]}
             </a>
@@ -36,7 +40,9 @@ export default () => {
         ) : (
           <a
             className={styles.btn}
-            onClick={() => signIn("discord", { callbackUrl: "/guilds" })}
+            onClick={() =>
+              signIn("discord", { callbackUrl: `${routeBase}/guilds` })
+            }
           >
             {t["log-in"]}
           </a>
