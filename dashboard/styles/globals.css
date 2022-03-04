@@ -1,8 +1,17 @@
 :root {
-  --dark-not-black: rgb(47, 49, 54);
+  --dark-not-black: #2f3136;
   --off-white: #f6f6f6;
-  --not-quite-black: rgb(32, 34, 37);
-  --manatee: rgb(183, 226, 214);
+  --not-quite-black: #202225;
+  --manatee: #b7e2d6;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --dark-not-black: #f2f3f5;
+    --off-white: rgb(32, 34, 37);
+    --not-quite-black: #e3e5e8;
+    --manatee: #8fc5b7;
+  }
 }
 
 html,
