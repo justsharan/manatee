@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import TitleCard from "../components/TitleCard";
+import Hero from "../components/Hero";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import styles from "./privacy.module.css";
@@ -7,7 +7,9 @@ import styles from "./privacy.module.css";
 export default () => (
   <>
     <Navbar />
-    <TitleCard title="Privacy Policy" />
+    <Hero>
+      <h1>Privacy Policy</h1>
+    </Hero>
     <main className={styles.main}>
       <p>
         This document entails the privacy policy that you accept when adding{" "}
