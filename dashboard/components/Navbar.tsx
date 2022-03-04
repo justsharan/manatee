@@ -1,18 +1,21 @@
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useTranslation } from "next-i18next";
-import Link from "next/link";
+import { FC } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { useTranslation } from "next-i18next";
+
 import styles from "./Navbar.module.css";
 
-export default () => {
+const Navbar: FC = () => {
   const { data } = useSession();
   const { locale, defaultLocale } = useRouter();
   const routeBase = locale === defaultLocale ? "/" : `/${locale}`;
 
-  const t = useTranslation("common").t("navbar");
+  const { t } = useTranslation("common");
+  const navbar = t("navbar") as Record<string, string>;
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} role="navigation">
       <div className={styles.links}>
         <Link href="/" locale={locale}>
           <img className={styles.manatee} src="/manatee.png" />
@@ -20,7 +23,7 @@ export default () => {
         <Link href="/docs" locale={locale}>
           Docs
         </Link>
-        <Link href="/invite">{t["invite"]}</Link>
+        <Link href="/invite">{navbar.invite}</Link>
         <Link href="/discord">Discord</Link>
       </div>
       <div className={styles.userinfo}>
@@ -34,7 +37,7 @@ export default () => {
               className={styles.btn}
               onClick={() => signOut({ callbackUrl: routeBase })}
             >
-              {t["log-out"]}
+              {navbar["log-out"]}
             </a>
           </>
         ) : (
@@ -44,10 +47,12 @@ export default () => {
               signIn("discord", { callbackUrl: `${routeBase}/guilds` })
             }
           >
-            {t["log-in"]}
+            {navbar["log-in"]}
           </a>
         )}
       </div>
     </nav>
   );
 };
+
+export default Navbar;
