@@ -36,6 +36,6 @@
   border-color: transparent;
   color: var(--dark-not-black);
   border-radius: 4px;
-  padding: calc(0.375em + 2px) 0.75em;
+  padding: 0.375em 0.5em;
   cursor: pointer;
 }
