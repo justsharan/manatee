@@ -3,7 +3,7 @@ import Discord from "next-auth/providers/discord";
 
 export default NextAuth({
   providers: [
-    new Discord({
+    Discord({
       clientId: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       authorization:
