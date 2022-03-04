@@ -1,0 +1,17 @@
+.hero {
+  width: 70vw;
+  margin: 3em auto;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  align-items: center;
+}
+
+.hero img {
+  border-radius: 50%;
+  width: 4em;
+}
+
+.hero * {
+  margin: 0;
+}
