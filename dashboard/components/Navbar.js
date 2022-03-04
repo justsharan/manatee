@@ -1,8 +1,10 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useTranslation } from "next-i18next";
 import styles from "./Navbar.module.css";
 
 export default () => {
   const { data } = useSession();
+  const t = useTranslation("common").t("navbar");
   return (
     <nav className={styles.navbar}>
       <div className={styles.links}>
@@ -10,7 +12,7 @@ export default () => {
           <img src="/manatee.png" />
         </a>
         <a href="/docs">Docs</a>
-        <a href="/invite">Invite</a>
+        <a href="/invite">{t["invite"]}</a>
         <a href="/discord">Discord</a>
       </div>
       <div className={styles.userinfo}>
@@ -22,7 +24,7 @@ export default () => {
               className={styles.btn}
               onClick={() => signOut({ callbackUrl: "/" })}
             >
-              Sign Out
+              {t["log-out"]}
             </a>
           </>
         ) : (
@@ -30,7 +32,7 @@ export default () => {
             className={styles.btn}
             onClick={() => signIn("discord", { callbackUrl: "/guilds" })}
           >
-            Log in
+            {t["log-in"]}
           </a>
         )}
       </div>

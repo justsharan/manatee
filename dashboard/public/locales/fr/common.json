@@ -1,3 +1,10 @@
 {
-  "subtitle": "Un bot Discord génial qui est parfait pour votre serveur."
+  "subtitle": "Un bot Discord génial qui est parfait pour votre serveur.",
+  "navbar": {
+    "invite": "Inviter",
+    "log-in": "Se connecter",
+    "log-out": "Déconnexion"
+  },
+  "welcome": "Bienvenue à Manatee!",
+  "welcome-subtitle": "Choisissez un serveur."
 }
