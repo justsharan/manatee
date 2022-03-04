@@ -4,7 +4,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import Navbar from "../../components/Navbar";
-import styles from "./[guild].module.css";
+import TitleCard from "../../components/TitleCard";
 
 export default () => {
   const { guild } = useRouter().query;
@@ -18,15 +18,11 @@ export default () => {
   return (
     <>
       <Navbar />
-      <header className={styles.hero}>
-        <img
-          src={`https://cdn.discordapp.com/icons/${info.id}/${info.icon}.jpg?size=256`}
-        />
-        <div>
-          <p>{t("settings")}</p>
-          <h1>{info.name}</h1>
-        </div>
-      </header>
+      <TitleCard
+        img={`https://cdn.discordapp.com/icons/${info.id}/${info.icon}.jpg?size=256`}
+        subtitle={t("settings")}
+        title={info.name}
+      />
       <main></main>
     </>
   );
