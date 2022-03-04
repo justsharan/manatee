@@ -15,3 +15,11 @@
 .hero * {
   margin: 0;
 }
+
+.manatee h1 {
+  color: var(--manatee);
+}
+
+.manatee * {
+  margin: 5px 0;
+}

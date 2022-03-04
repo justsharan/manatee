@@ -4,6 +4,7 @@ import { useTranslation } from "next-i18next";
 
 import Navbar from "../components/Navbar";
 import GuildListItem from "../components/GuildListItem";
+import Hero from "../components/Hero";
 
 import styles from "./guilds.module.css";
 
@@ -15,10 +16,10 @@ export default function Guilds() {
   return (
     <>
       <Navbar />
-      <header className={styles.hero}>
+      <Hero manatee>
         <h1>{t("welcome")}</h1>
         <p>{t("welcome-subtitle")}</p>
-      </header>
+      </Hero>
       <main className={styles.list}>
         {data.guilds.map((guild) => (
           <GuildListItem {...guild} />

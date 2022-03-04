@@ -2,10 +2,15 @@ import { FC } from "react";
 
 import styles from "./Hero.module.css";
 
-const Hero: FC<{ img?: string }> = ({ img, children }) => (
+type HeroProps = {
+  img?: string;
+  manatee?: boolean;
+};
+
+const Hero: FC<HeroProps> = ({ children, ...props }) => (
   <header className={styles.hero}>
-    {img && <img src={img} />}
-    <div>{children}</div>
+    {props.img && <img src={props.img} />}
+    <div className={props.manatee && styles.manatee}>{children}</div>
   </header>
 );
 

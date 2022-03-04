@@ -1,16 +1,3 @@
-.hero {
-  width: 70vw;
-  margin: 3em auto;
-}
-
-.hero h1 {
-  color: var(--manatee);
-}
-
-.hero * {
-  margin: 5px 0;
-}
-
 .list {
   display: flex;
   flex-direction: row;
