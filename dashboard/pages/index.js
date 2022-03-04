@@ -1,6 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -13,6 +14,7 @@ export default function Home() {
           <p>{t("subtitle")}</p>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

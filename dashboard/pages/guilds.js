@@ -3,6 +3,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import GuildListItem from "../components/GuildListItem";
 import Hero from "../components/Hero";
 
@@ -25,6 +26,7 @@ export default function Guilds() {
           <GuildListItem {...guild} />
         ))}
       </main>
+      <Footer />
     </>
   );
 }

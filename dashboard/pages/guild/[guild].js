@@ -4,6 +4,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import Hero from "../../components/Hero";
 
 export default () => {
@@ -25,6 +26,7 @@ export default () => {
         <h1>{info.name}</h1>
       </Hero>
       <main></main>
+      <Footer />
     </>
   );
 };
