@@ -1,19 +1,25 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useTranslation } from "next-i18next";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "./Navbar.module.css";
 
 export default () => {
   const { data } = useSession();
+  const { locale } = useRouter();
   const t = useTranslation("common").t("navbar");
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.links}>
-        <a href="/">
+        <Link href="/" locale={locale}>
           <img src="/manatee.png" />
-        </a>
-        <a href="/docs">Docs</a>
-        <a href="/invite">{t["invite"]}</a>
-        <a href="/discord">Discord</a>
+        </Link>
+        <Link href="/docs" locale={locale}>
+          Docs
+        </Link>
+        <Link href="/invite">{t["invite"]}</Link>
+        <Link href="/discord">Discord</Link>
       </div>
       <div className={styles.userinfo}>
         {data ? (
