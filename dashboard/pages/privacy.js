@@ -1,5 +1,4 @@
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
@@ -130,7 +129,6 @@ export default () => (
         , which applies to users of the bots listed in that agreement.
       </p>
     </main>
-    <Footer />
   </>
 );
 
