@@ -3,31 +3,28 @@ import { useSession } from "next-auth/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import Hero from "../../components/Hero";
+import Hero from "components/Hero";
+import Layout from "components/Layout";
 
 export default () => {
   const { guild } = useRouter().query;
   const { t } = useTranslation("settings");
 
   const { data } = useSession();
-  if (!data) return <>Loading</>;
+  console.log(data);
+  if (!data) return <>Loading...</>;
 
-  const info = data.guilds.find((g) => g.id === guild);
+  const { id, icon, name } = (data.guilds as any[]).find(
+    ({ id }) => id === guild
+  );
 
   return (
-    <>
-      <Navbar />
-      <Hero
-        img={`https://cdn.discordapp.com/icons/${info.id}/${info.icon}.jpg?size=256`}
-      >
+    <Layout>
+      <Hero img={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg?size=256`}>
         <p>{t("settings")}</p>
-        <h1>{info.name}</h1>
+        <h1>{name}</h1>
       </Hero>
-      <main></main>
-      <Footer />
-    </>
+    </Layout>
   );
 };
 

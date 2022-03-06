@@ -32,24 +32,3 @@ a {
 * {
   box-sizing: border-box;
 }
-
-section.hero {
-  margin: 10em 0;
-  text-align: center;
-}
-
-.hero * {
-  margin: 5px 0;
-}
-
-section.hero h1 {
-  color: var(--manatee);
-  font-weight: bold;
-  font-size: 4em;
-}
-
-span.keyword {
-  color: var(--manatee);
-  font-weight: bold;
-  text-transform: uppercase;
-}

@@ -1,13 +1,12 @@
 import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from "next-i18next";
-import "../styles/globals.css";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  return (
+import "styles/globals.css";
+
+export default appWithTranslation(
+  ({ Component, pageProps: { session, ...pageProps } }) => (
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
-  );
-}
-
-export default appWithTranslation(MyApp);
+  )
+);
