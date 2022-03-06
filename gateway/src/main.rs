@@ -14,7 +14,9 @@ pub struct ContextValue {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     let token = env::var("DISCORD_TOKEN")?;
-    let (shard, mut events) = Shard::new(token, Intents::GUILDS | Intents::GUILD_MESSAGES);
+    let intents = Intents::GUILDS | Intents::GUILD_MESSAGES;
+
+    let (shard, mut events) = Shard::new(token, intents);
     let pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&env::var("DATABASE_URL")?)
@@ -28,7 +30,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     });
 
     while let Some(event) = events.next().await {
-        events::handle_events(Arc::clone(&ctx), event);
+        events::handle_events(Arc::clone(&ctx), event).await?
     }
 
     Ok(())
