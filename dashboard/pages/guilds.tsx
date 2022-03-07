@@ -38,9 +38,11 @@ export default () => {
         <p>{t("welcome-subtitle")}</p>
       </Hero>
       <div className="list">
-        {(data.guilds as any[]).map((g) => (
-          <GuildListItem {...g} />
-        ))}
+        {(data.guilds as any[])
+          .filter((g) => Number(g.permissions) & (1 << 5))
+          .map((g) => (
+            <GuildListItem key={g.id} {...g} />
+          ))}
       </div>
     </Layout>
   );
