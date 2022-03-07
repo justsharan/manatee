@@ -24,8 +24,6 @@ const GuildListItem: FC<GuildListItemProps> = ({ id, icon, name }) => {
   }, [dbInfo]);
 
   const updateDbInfo = async () => {
-    const url = `${window.location.origin}/api/guilds/${id}`;
-    console.log(url);
     const res = await fetch(`${window.location.origin}/api/guilds/${id}`);
     setDbInfo(res.ok ? await res.json() : { error: String(res.status) });
   };

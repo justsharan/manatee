@@ -11,8 +11,7 @@ export default () => {
   const { t } = useTranslation("settings");
 
   const { data } = useSession();
-  console.log(data);
-  if (!data) return <>Loading...</>;
+  if (!data) return <Layout>Loading</Layout>;
 
   const { id, icon, name } = (data.guilds as any[]).find(
     ({ id }) => id === guild
