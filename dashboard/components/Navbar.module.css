@@ -1,0 +1,45 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  padding: 0 5em;
+  justify-content: space-between;
+  background-color: var(--not-quite-black);
+  flex-wrap: wrap;
+}
+
+.navbar img {
+  height: 2.5em;
+  width: auto;
+}
+
+.manatee {
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2em;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.userinfo img {
+  border-radius: 50%;
+  height: 2em;
+}
+
+.btn {
+  background-color: var(--manatee);
+  border-color: transparent;
+  color: var(--dark-not-black);
+  border-radius: 4px;
+  padding: 0.375em 0.5em;
+  cursor: pointer;
+}
