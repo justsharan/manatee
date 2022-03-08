@@ -23,7 +23,13 @@ export default NextAuth({
         const res = await fetch("https://discord.com/api/v9/users/@me/guilds", {
           headers: { Authorization: `Bearer ${token.accessToken}` },
         });
-        token.guilds = await res.json();
+        if (res.ok) {
+          token.guilds = await res.json();
+        } else {
+          console.error(
+            `Error fetching guilds: ${res.status} ${res.statusText}`
+          );
+        }
       }
       return token;
     },
