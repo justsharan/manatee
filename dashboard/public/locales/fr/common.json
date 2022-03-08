@@ -1,0 +1,13 @@
+{
+  "footer": {
+    "privacy": "Privacy Policy"
+  },
+  "navbar": {
+    "invite": "Inviter",
+    "log-in": "Se connecter",
+    "log-out": "Déconnexion"
+  },
+  "subtitle": "Un bot Discord génial qui est parfait pour votre serveur.",
+  "welcome": "Bienvenue à Manatee!",
+  "welcome-subtitle": "Choisissez un serveur."
+}

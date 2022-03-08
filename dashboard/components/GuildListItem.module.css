@@ -1,0 +1,18 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  border-radius: 50%;
+  width: 4em;
+  height: auto;
+}
+
+.error img {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
