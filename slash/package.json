@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
+    "discord-api-types": "^0.28.0",
     "slash-create": "^5.0.3"
   },
   "devDependencies": {
