@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
 
 export default class extends SlashCommand {

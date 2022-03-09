@@ -9,7 +9,6 @@ import {
   SlashCommand,
   SlashCreator,
 } from "slash-create";
-import fetch from "node-fetch";
 
 interface TriviaQuestion {
   category: string;
