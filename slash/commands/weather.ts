@@ -52,6 +52,10 @@ export default class extends SlashCommand {
     const { location, current, forecast } = await res.json();
     const { astro, day } = forecast.forecastday[0];
 
+    if (!ctx.options.units && location.country !== "United States of America") {
+      ctx.options.units = "metric";
+    }
+
     // Make basic embed with all values that don't change
     const baseEmbed = new EmbedBuilder()
       .URL(`https://darksky.net/forecast/${location.lat},${location.lon}/`)
