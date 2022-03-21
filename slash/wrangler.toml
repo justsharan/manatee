@@ -1,8 +1,13 @@
 name = "manatee-slash"
-type = "webpack"
+type = "javascript"
 route = ''
 zone_id = ''
 usage_model = ''
 compatibility_flags = []
 workers_dev = true
 compatibility_date = "2022-03-08"
+
+[build]
+command = "yarn install && yarn build"
+[build.upload]
+format = "service-worker"

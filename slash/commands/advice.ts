@@ -1,22 +1,7 @@
-import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
+import { CommandInteraction } from "discord-workers";
 
-export default class extends SlashCommand {
-  constructor(creator: SlashCreator) {
-    super(creator, {
-      name: "advice",
-      description: "See what piece of useful advice I have just for you.",
-    });
-  }
-
-  async run(ctx: CommandContext) {
-    // Get random advice
-    const res = await fetch("http://api.adviceslip.com/advice");
-    const { slip } = await res.json();
-
-    // Send advice to user
-    return ctx.send({
-      content: slip.advice,
-      ephemeral: true,
-    });
-  }
-}
+export default async (int: CommandInteraction): Promise<Response> => {
+  const res = await fetch("https://api.adviceslip.com/advice");
+  const body = (await res.json()) as any;
+  return int.respond(4, { content: body.slip.advice });
+};

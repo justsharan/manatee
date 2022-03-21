@@ -1,13 +1,16 @@
 {
   "name": "manatee-slash",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "dist/worker.js",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
     "discord-api-types": "^0.28.0",
-    "slash-create": "^5.0.3"
+    "discord-workers": "^0.1.10"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.4.0",
