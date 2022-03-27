@@ -4,8 +4,9 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Hero from "components/Hero";
 import Layout from "components/Layout";
-
 import GuildListItem from "components/GuildListItem";
+
+import styles from "./guilds.module.css";
 
 export default () => {
   const { data } = useSession();
@@ -14,30 +15,11 @@ export default () => {
 
   return (
     <Layout>
-      <style jsx>{`
-        .list {
-          display: flex;
-          flex-direction: row;
-          gap: 3em;
-          flex-wrap: wrap;
-          justify-content: center;
-          margin: 2em auto;
-        }
-
-        @media only screen and (max-width: 600px) {
-          .list {
-            display: flex;
-            flex-direction: column;
-            gap: 3em;
-            align-items: center;
-          }
-        }
-      `}</style>
       <Hero manatee>
         <h1>{t("welcome")}</h1>
         <p>{t("welcome-subtitle")}</p>
       </Hero>
-      <div className="list">
+      <div className={styles.list}>
         {(data.guilds as any[])
           .filter((g) => Number(g.permissions) & (1 << 5))
           .map((g) => (
