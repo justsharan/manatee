@@ -22,7 +22,7 @@ export default async (int: CommandInteraction): Promise<Response> => {
     });
   }
 
-  const [{ entry }] = body.list;
+  const [entry] = body.list;
   return int.send(
     new Embed()
       .title(entry.word)

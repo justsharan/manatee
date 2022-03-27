@@ -27,7 +27,7 @@ export default async (int: CommandInteraction): Promise<Response> => {
     );
 
   return int.send({
-    content: question.question,
+    content: decodeURIComponent(question.question),
     components: [options.toJSON()],
   });
 };
