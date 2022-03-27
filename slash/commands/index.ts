@@ -3,6 +3,7 @@ import advice from "./advice";
 import cat from "./cat";
 import movie from "./movie";
 import urban from "./urban";
+import weather from "./weather";
 
 type Command = (
   int: CommandInteraction,
@@ -14,4 +15,5 @@ export default {
   cat,
   movie,
   urban,
+  weather,
 } as Record<string, Command>;
