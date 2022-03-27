@@ -5,11 +5,13 @@ const moonPhaseEmoji = (phase: string): string => {
   return (phase.includes("moon") ? phase : `${phase} moon`).replace(/\s/g, "_");
 };
 
-export default async (int: CommandInteraction): Promise<Response> => {
+export default async (
+  int: CommandInteraction<{ location: string; units: string }>
+): Promise<Response> => {
   const fetchURL = new URL("https://api.weatherapi.com/v1/forecast.json");
   fetchURL.searchParams.set("key", WEATHER_KEY);
   fetchURL.searchParams.set("days", "1");
-  fetchURL.searchParams.set("q", int.options.location);
+  fetchURL.searchParams.set("q", int.options.location!);
 
   const res = await fetch(fetchURL.href);
   if (!res.ok) {

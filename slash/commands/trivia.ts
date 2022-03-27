@@ -1,6 +1,8 @@
-import { ActionRow, Button, CommandInteraction, Embed } from "discord-workers";
+import { ActionRow, Button, CommandInteraction } from "discord-workers";
 
-export default async (int: CommandInteraction): Promise<Response> => {
+export default async (
+  int: CommandInteraction<{ category: string; difficulty: string }>
+): Promise<Response> => {
   const fetchURL = new URL("https://opentdb.com/api.php");
   fetchURL.searchParams.set("amount", "1");
   fetchURL.searchParams.set("encode", "url3986");

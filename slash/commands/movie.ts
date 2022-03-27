@@ -1,9 +1,11 @@
 import { CommandInteraction, Embed } from "discord-workers";
 
-export default async (int: CommandInteraction): Promise<Response> => {
+export default async (
+  int: CommandInteraction<{ title: string; year: number }>
+): Promise<Response> => {
   const request = new URL("https://api.themoviedb.org/3/search/movie");
   request.searchParams.set("api_key", TMDB_KEY);
-  request.searchParams.set("query", int.options.title);
+  request.searchParams.set("query", int.options.title!);
   if (int.options.year) {
     request.searchParams.set("year", String(int.options.year));
   }

@@ -364,10 +364,10 @@ discord-api-types@^0.29.0:
   resolved "https://registry.npmjs.org/discord-api-types/-/discord-api-types-0.29.0.tgz"
   integrity sha512-Ekq1ICNpOTVajXKZguNFrsDeTmam+ZeA38txsNLZnANdXUjU6QBPIZLUQTC6MzigFGb0Tt8vk4xLnXmzv0shNg==
 
-discord-workers@^0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/discord-workers/-/discord-workers-0.1.15.tgz#1adac2db614c62785db4b72bca9621e187c7cbd9"
-  integrity sha512-YymzqPMfMEbozPW6O08VxOWiDJHpJhDsuqqZX21GWjg9JuXnlk8JzdXmZ6zIB1aia3vnvY9gIPoXsRcX/m5MAg==
+discord-workers@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/discord-workers/-/discord-workers-0.1.16.tgz#ca9b9bcd032bcb0d8c4d725bdc74f9cbbc323246"
+  integrity sha512-hM2pJzHr2RdRZljY0oqqxQcLHpBlUa6hltTSOgaVsKTWiJbaTYuxrAg5M1TdSDBW2rYWX8C0d+NFRNwNhopW8Q==
   dependencies:
     discord-api-types "^0.29.0"
 

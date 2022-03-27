@@ -8,9 +8,11 @@ const formatDef = (def: string): string =>
     )})`;
   });
 
-export default async (int: CommandInteraction): Promise<Response> => {
+export default async (
+  int: CommandInteraction<{ term: string }>
+): Promise<Response> => {
   const fetchURL = new URL("https://api.urbandictionary.com/v0/define");
-  fetchURL.searchParams.set("term", int.options.term);
+  fetchURL.searchParams.set("term", int.options.term!);
 
   const res = await fetch(fetchURL.href);
   const body: any = await res.json();

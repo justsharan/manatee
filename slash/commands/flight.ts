@@ -3,9 +3,13 @@ import { CommandInteraction, Embed } from "discord-workers";
 
 const FLIGHT_URL = "https://www.flightview.com/flight-tracker";
 
-export default async (int: CommandInteraction): Promise<Response> => {
+export default async (
+  int: CommandInteraction<{ code: string }>
+): Promise<Response> => {
   const { code } = int.options;
-  const res = await fetch(`${FLIGHT_URL}/${code.slice(0, 2)}/${code.slice(2)}`);
+  const res = await fetch(
+    `${FLIGHT_URL}/${code!.slice(0, 2)}/${code!.slice(2)}`
+  );
 
   if (res.url.includes("ftError")) {
     return int.send({
