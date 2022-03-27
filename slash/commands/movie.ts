@@ -27,27 +27,29 @@ export default async (int: CommandInteraction): Promise<Response> => {
   const movie: any = await res2.json();
 
   return int.send({
-    embeds: new Embed()
-      .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
-      .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
-      .description(movie.overview ?? "")
-      .field(
-        "Genres",
-        movie.genres.map((g: any): string => g.name).join(", "),
-        true
-      )
-      .field("Length", `${movie.runtime} min`, true)
-      .field(
-        "Box Office",
-        movie.revenue.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        }),
-        true
-      )
-      .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
-      .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
-      .toJSON(),
+    embeds: [
+      new Embed()
+        .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
+        .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
+        .description(movie.overview ?? "")
+        .field(
+          "Genres",
+          movie.genres.map((g: any): string => g.name).join(", "),
+          true
+        )
+        .field("Length", `${movie.runtime} min`, true)
+        .field(
+          "Box Office",
+          movie.revenue.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          }),
+          true
+        )
+        .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
+        .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
+        .toJSON(),
+    ],
     components: [
       {
         type: 1,

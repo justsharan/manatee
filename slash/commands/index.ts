@@ -3,6 +3,7 @@ import advice from "./advice";
 import cat from "./cat";
 import flight from "./flight";
 import movie from "./movie";
+import trivia from "./trivia";
 import urban from "./urban";
 import weather from "./weather";
 
@@ -16,6 +17,7 @@ export default {
   cat,
   flight,
   movie,
+  trivia,
   urban,
   weather,
 } as Record<string, Command>;
