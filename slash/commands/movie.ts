@@ -1,122 +1,69 @@
-import fetch from "node-fetch";
-import {
-  CommandContext,
-  CommandOptionType,
-  InteractionResponseFlags,
-  SlashCommand,
-  SlashCreator,
-} from "slash-create";
-import { ActionRow, LinkButton } from "../utils/ComponentBuilder";
-import { EmbedBuilder } from "../utils/EmbedBuilder";
+import { CommandInteraction, Embed } from "discord-workers";
 
-interface TMDBMovie {
-  adult: boolean;
-  backdrop_path: string | null;
-  belongs_to_collection: object | null;
-  budget: number;
-  genres: { id: number; name: string }[];
-  homepage: string | null;
-  id: number;
-  imdb_id: string | null;
-  original_language: string;
-  original_title: string;
-  overview: string | null;
-  popularity: number;
-  poster_path: string | null;
-  production_companies: { name: string }[];
-  release_date: string;
-  revenue: number;
-  runtime: number;
-  tagline: string | null;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+export default async (int: CommandInteraction): Promise<Response> => {
+  const request = new URL("https://api.themoviedb.org/3/search/movie");
+  request.searchParams.set("api_key", TMDB_KEY);
+  request.searchParams.set("query", int.options.title);
+  if (int.options.year) {
+    request.searchParams.set("year", String(int.options.year));
+  }
 
-const TMDB_API_URL = "https://api.themoviedb.org/3/search/movie";
-const TMDB_API_MOVIE_URL = "https://api.themoviedb.org/3/movie";
+  // Find movie
+  const res = await fetch(request.href);
+  const body: any = await res.json();
 
-export default class extends SlashCommand {
-  constructor(creator: SlashCreator) {
-    super(creator, {
-      name: "movie",
-      description: "Search for your favorite movie online.",
-      options: [
-        {
-          name: "title",
-          description: "The title of the movie you're looking for.",
-          type: CommandOptionType.STRING,
-          required: true,
-        },
-        {
-          name: "year",
-          description: "The year the movie was released.",
-          type: CommandOptionType.INTEGER,
-        },
-      ],
+  // Send message if no movie was found
+  if (!body.results.length) {
+    return int.send({
+      content: "There's no movie by that name (in that year, if specified).",
+      flags: 64,
     });
   }
 
-  async run(ctx: CommandContext) {
-    // Create querystring params for request
-    const params = new URLSearchParams({
-      api_key: process.env.TMDB_KEY ?? "",
-      query: ctx.options.title,
-    });
-    if (ctx.options.year) params.set("year", String(ctx.options.year));
+  // Get full details of movie
+  const res2 = await fetch(
+    `https://api.themoviedb.org/3/movie/${body.results[0].id}?api_key=${TMDB_KEY}`
+  );
+  const movie: any = await res2.json();
 
-    // Find movie
-    const res = await fetch(`${TMDB_API_URL}?${params.toString()}`);
-    const body: { results: { id: number }[] } = await res.json();
-
-    // Send message if no movie was found.
-    if (!body.results.length) {
-      return ctx.send({
-        content: "There's no movie by that name (in that year, if specified).",
-        flags: InteractionResponseFlags.EPHEMERAL,
-      });
-    }
-
-    // Get full details of movie
-    const movieRes = await fetch(
-      `${TMDB_API_MOVIE_URL}/${body.results[0].id}?api_key=${process.env.TMDB_KEY}`
-    );
-    const movie: TMDBMovie = await movieRes.json();
-
-    // Send info about movie
-    return ctx.send({
-      content: "",
-      embeds: [
-        new EmbedBuilder()
-          .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
-          .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
-          .description(movie.overview ?? "")
-          .field("Genres", movie.genres.map((g) => g.name).join(", "), true)
-          .field("Length", `${movie.runtime} min`, true)
-          .field(
-            "Box Office",
-            movie.revenue.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            }),
-            true
-          )
-          .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
-          .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
-          .toJSON(),
-      ],
-      components: [
-        new ActionRow(
-          new LinkButton()
-            .link(
-              `https://www.themoviedb.org/movie/${movie.id}-${movie.title
-                .toLowerCase()
-                .replace(/\s/g, "-")}/watch`
-            )
-            .label("Watch Now")
-        ).toJSON(),
-      ],
-    });
-  }
-}
+  return int.send({
+    embeds: [
+      new Embed()
+        .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
+        .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
+        .description(movie.overview ?? "")
+        .field(
+          "Genres",
+          movie.genres.map((g: any): string => g.name).join(", "),
+          true
+        )
+        .field("Length", `${movie.runtime} min`, true)
+        .field(
+          "Box Office",
+          movie.revenue.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          }),
+          true
+        )
+        .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
+        .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
+        .toJSON(),
+    ],
+    components: [
+      {
+        type: 1,
+        components: [
+          {
+            type: 2,
+            style: 5,
+            url: `https://www.themoviedb.org/movie/${movie.id}-${movie.title
+              .toLowerCase()
+              .replace(/\s/g, "-")}/watch`,
+            label: "Watch Now",
+          },
+        ],
+      },
+    ],
+  });
+};
