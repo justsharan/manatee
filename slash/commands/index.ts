@@ -1,5 +1,7 @@
 import { CommandInteraction } from "discord-workers";
-import Advice from "./advice";
+import advice from "./advice";
+import cat from "./cat";
+import movie from "./movie";
 
 type Command = (
   int: CommandInteraction,
@@ -7,5 +9,7 @@ type Command = (
 ) => Response | Promise<Response>;
 
 export default {
-  advice: Advice,
+  advice,
+  cat,
+  movie,
 } as Record<string, Command>;

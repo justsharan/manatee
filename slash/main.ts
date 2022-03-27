@@ -13,12 +13,12 @@ async function handle(req: Request, wait: (f: any) => void): Promise<Response> {
   const timestamp = req.headers.get("X-Signature-Timestamp") ?? "";
 
   // Validate signature
-  const isValid = await verify(body!, signature, timestamp);
+  const isValid = await verify(body, signature, timestamp);
   if (!isValid) {
     return new Response("Bad signature", { status: 401 });
   }
 
-  const data = JSON.parse(body!);
+  const data = JSON.parse(body);
   switch (data.type) {
     case InteractionType.Ping:
       return new Response(JSON.stringify({ type: 1 }));
