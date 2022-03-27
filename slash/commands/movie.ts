@@ -1,4 +1,4 @@
-import { CommandInteraction } from "discord-workers";
+import { CommandInteraction, Embed } from "discord-workers";
 
 export default async (int: CommandInteraction): Promise<Response> => {
   const request = new URL("https://api.themoviedb.org/3/search/movie");
@@ -10,7 +10,7 @@ export default async (int: CommandInteraction): Promise<Response> => {
 
   // Find movie
   const res = await fetch(request.href);
-  const body = (await res.json()) as any;
+  const body: any = await res.json();
 
   // Send message if no movie was found
   if (!body.results.length) {
@@ -24,42 +24,30 @@ export default async (int: CommandInteraction): Promise<Response> => {
   const res2 = await fetch(
     `https://api.themoviedb.org/3/movie/${body.results[0].id}?api_key=${TMDB_KEY}`
   );
-  const movie = (await res2.json()) as any;
+  const movie: any = await res2.json();
 
   return int.send({
-    embeds: [
-      {
-        title: `${movie.title} (${movie.release_date.slice(0, 4)})`,
-        url: `https://www.imdb.com/title/${movie.imdb_id}`,
-        description: movie.overview ?? "",
-        fields: [
-          {
-            name: "Genres",
-            value: movie.genres.map((g: any): string => g.name).join(", "),
-            inline: true,
-          },
-          {
-            name: "Length",
-            value: `${movie.runtime} min`,
-            inline: true,
-          },
-          {
-            name: "Box Office",
-            value: movie.revenue.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            }),
-            inline: true,
-          },
-        ],
-        image: {
-          url: `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`,
-        },
-        thumbnail: {
-          url: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-        },
-      },
-    ],
+    embeds: new Embed()
+      .title(`${movie.title} (${movie.release_date.slice(0, 4)})`)
+      .URL(`https://www.imdb.com/title/${movie.imdb_id}`)
+      .description(movie.overview ?? "")
+      .field(
+        "Genres",
+        movie.genres.map((g: any): string => g.name).join(", "),
+        true
+      )
+      .field("Length", `${movie.runtime} min`, true)
+      .field(
+        "Box Office",
+        movie.revenue.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
+        }),
+        true
+      )
+      .image(`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`)
+      .thumbnail(`https://image.tmdb.org/t/p/w500${movie.poster_path}`)
+      .toJSON(),
     components: [
       {
         type: 1,

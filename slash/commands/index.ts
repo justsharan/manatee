@@ -2,6 +2,7 @@ import { CommandInteraction } from "discord-workers";
 import advice from "./advice";
 import cat from "./cat";
 import movie from "./movie";
+import urban from "./urban";
 
 type Command = (
   int: CommandInteraction,
@@ -12,4 +13,5 @@ export default {
   advice,
   cat,
   movie,
+  urban,
 } as Record<string, Command>;
