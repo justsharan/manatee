@@ -1,7 +1,8 @@
-import { CommandInteraction } from "discord-workers";
+import { CommandInteraction, Interaction } from "discord-workers";
 import { InteractionType } from "discord-api-types/v10";
 import verify from "./verify";
 import commands from "./commands/";
+import components from "./components/";
 
 addEventListener("fetch", (event: FetchEvent) =>
   event.respondWith(handle(event.request, event.waitUntil.bind(event)))
@@ -31,6 +32,13 @@ async function handle(req: Request, wait: (f: any) => void): Promise<Response> {
           content: "Unrecognized command",
           flags: 64,
         });
+      }
+    case InteractionType.MessageComponent:
+      for (const c of components) {
+        const res = await c(new Interaction(data, true), wait);
+        if (res instanceof Response) {
+          return res;
+        }
       }
     default:
       return new Response("Unrecognized interaction type", { status: 400 });
