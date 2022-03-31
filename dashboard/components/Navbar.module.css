@@ -1,0 +1,32 @@
+.manatee {
+  width: 3em;
+  height: auto;
+}
+
+.navbar {
+  background-color: var(--not-quite-black);
+  padding: 0 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  align-items: center;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.user img {
+  height: 2em;
+  border-radius: 50%;
+}
