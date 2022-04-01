@@ -1,0 +1,7 @@
+.hero {
+  margin: 3em auto 0;
+}
+
+.hero * {
+  margin: 0;
+}
