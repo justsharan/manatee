@@ -1,18 +1,8 @@
-import { GetServerSideProps, GetStaticProps } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import GuildListItem from "../components/GuildListItem";
 import Hero from "../components/Hero";
 import Layout from "../components/Layout";
 import styles from "./guilds.module.css";
-
-interface Guild {
-  id: string;
-  name: string;
-  icon?: string;
-  owner: boolean;
-  permissions: string;
-  features: string[];
-}
 
 export default function Guilds() {
   const { data }: any = useSession({ required: true });

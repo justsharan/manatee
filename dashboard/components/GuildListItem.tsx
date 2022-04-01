@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./GuildListItem.module.css";
 
 interface GuildProps {
@@ -11,14 +12,16 @@ interface GuildProps {
 
 export default function GuildListItem({ id, icon, name }: GuildProps) {
   return (
-    <div className={styles.item}>
-      <img
-        src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg?size=256`}
-        className={styles.icon}
-      />
-      <p className={styles.name}>
-        {name.length > 30 ? name.slice(20) + "..." : name}
-      </p>
-    </div>
+    <Link href={`/guild/${id}`}>
+      <div className={styles.item}>
+        <img
+          src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg?size=256`}
+          className={styles.icon}
+        />
+        <p className={styles.name}>
+          {name.length > 30 ? name.slice(20) + "..." : name}
+        </p>
+      </div>
+    </Link>
   );
 }
