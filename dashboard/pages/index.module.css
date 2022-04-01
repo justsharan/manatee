@@ -1,0 +1,10 @@
+.hero h1 {
+  color: var(--manatee);
+  font-size: 4em;
+  font-weight: 700;
+}
+
+.hero {
+  text-align: center;
+  margin-top: 30vh;
+}

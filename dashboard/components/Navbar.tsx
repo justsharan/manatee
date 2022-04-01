@@ -18,7 +18,12 @@ export default function Navbar() {
       <div className={styles.user}>
         {data && (
           <>
-            <Image src={data.user.image} width="30" height="30" />
+            <Image
+              src={data.user.image}
+              width="30"
+              height="30"
+              className="round"
+            />
             <Link href="/guilds">{data.user.name}</Link>
           </>
         )}

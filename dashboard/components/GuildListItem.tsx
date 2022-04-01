@@ -19,7 +19,7 @@ export default function GuildListItem({ id, icon, name }: GuildProps) {
           src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg?size=256`}
           width="64"
           height="64"
-          className={styles.icon}
+          className="round"
         />
         <p className={styles.name}>
           {name.length > 30 ? name.slice(20) + "..." : name}

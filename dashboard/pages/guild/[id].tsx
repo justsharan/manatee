@@ -22,7 +22,7 @@ export default function Guild(props: Guild) {
           src={`https://cdn.discordapp.com/icons/${props.id}/${props.icon}.jpg?size=256`}
           width="64"
           height="64"
-          className={styles.icon}
+          className="round"
         />
         <Hero>
           <p>Settings for</p>

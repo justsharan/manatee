@@ -1,9 +1,3 @@
-.icon {
-  border-radius: 50%;
-  height: 4em;
-  width: auto;
-}
-
 .header {
   display: flex;
   flex-direction: row;
