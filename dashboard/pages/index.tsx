@@ -7,7 +7,7 @@ export default function Home() {
     <Layout>
       <Hero>
         <div className={styles.hero}>
-          <h1 style={{ color: "var(--manatee)" }}>Manatee</h1>
+          <h1 className="manatee">Manatee</h1>
           <p>
             An awesome, easy-to-use Discord bot that's perfect for your server.
           </p>

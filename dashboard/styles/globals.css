@@ -27,3 +27,7 @@ a {
 .round {
   border-radius: 50%;
 }
+
+.manatee {
+  color: var(--manatee);
+}
