@@ -1,7 +1,9 @@
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 
-export default function Navbar(props) {
+export default function Navbar() {
+  const { data } = useSession();
   return (
     <nav className={styles.navbar} role="navigation">
       <div className={styles.links}>
@@ -13,8 +15,19 @@ export default function Navbar(props) {
         <Link href="/support">Support</Link>
       </div>
       <div className={styles.user}>
-        <img src={props.avatar} />
-        <Link href="/guilds">{props.username}</Link>
+        {data && (
+          <>
+            <img src={data.user.image} />
+            <Link href="/guilds">{data.user.name}</Link>
+          </>
+        )}
+        {!data && (
+          <>
+            <a onClick={() => signIn("discord", { callbackUrl: "/guilds" })}>
+              Sign In
+            </a>
+          </>
+        )}
       </div>
     </nav>
   );
