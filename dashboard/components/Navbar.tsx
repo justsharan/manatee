@@ -13,7 +13,7 @@ export default function Navbar() {
         </Link>
         <Link href="/docs">Docs</Link>
         <Link href="/invite">Invite</Link>
-        <Link href="/support">Support</Link>
+        <Link href="/discord">Support</Link>
       </div>
       <div className={styles.user}>
         {data && (
