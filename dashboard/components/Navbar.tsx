@@ -1,4 +1,5 @@
 import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
 
@@ -8,7 +9,7 @@ export default function Navbar() {
     <nav className={styles.navbar} role="navigation">
       <div className={styles.links}>
         <Link href="/">
-          <img className={styles.manatee} src="/manatee.png" />
+          <Image src="/manatee.png" width="50" height="50" />
         </Link>
         <Link href="/docs">Docs</Link>
         <Link href="/invite">Invite</Link>
@@ -17,7 +18,7 @@ export default function Navbar() {
       <div className={styles.user}>
         {data && (
           <>
-            <img src={data.user.image} />
+            <Image src={data.user.image} width="30" height="30" />
             <Link href="/guilds">{data.user.name}</Link>
           </>
         )}

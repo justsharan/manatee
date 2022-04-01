@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./GuildListItem.module.css";
 
@@ -14,8 +15,10 @@ export default function GuildListItem({ id, icon, name }: GuildProps) {
   return (
     <Link href={`/guild/${id}`}>
       <div className={styles.item}>
-        <img
+        <Image
           src={`https://cdn.discordapp.com/icons/${id}/${icon}.jpg?size=256`}
+          width="64"
+          height="64"
           className={styles.icon}
         />
         <p className={styles.name}>

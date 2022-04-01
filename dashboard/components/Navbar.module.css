@@ -1,8 +1,3 @@
-.manatee {
-  width: 3em;
-  height: auto;
-}
-
 .navbar {
   background-color: var(--not-quite-black);
   padding: 0 5em;
@@ -27,6 +22,5 @@
 }
 
 .user img {
-  height: 2em;
   border-radius: 50%;
 }
