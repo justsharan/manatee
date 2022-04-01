@@ -15,11 +15,27 @@ export default NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    jwt: ({ token, account }) =>
-      account ? { accessToken: account.access_token, ...token } : token,
+    jwt: async ({ token, account }) => {
+      if (account) token.accessToken = account.access_token;
+      if (!token.guilds) {
+        const res = await fetch(
+          "https://discord.com/api/v10/users/@me/guilds",
+          {
+            headers: {
+              Authorization: `Bearer ${account.access_token}`,
+            },
+          }
+        );
+        if (res.ok) {
+          token.guilds = await res.json();
+        }
+      }
+      return token;
+    },
     session: ({ session, token }) => ({
       id: token.sub,
       accessToken: token.accessToken,
+      guilds: token.guilds,
       ...session,
     }),
   },

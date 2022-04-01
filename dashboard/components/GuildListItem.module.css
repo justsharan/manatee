@@ -1,0 +1,11 @@
+.item {
+  cursor: pointer;
+  width: 10em;
+  text-align: center;
+}
+
+.icon {
+  border-radius: 50%;
+  height: 4em;
+  width: auto;
+}
