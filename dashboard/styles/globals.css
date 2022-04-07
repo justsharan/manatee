@@ -31,3 +31,13 @@ a {
 .manatee {
   color: var(--manatee);
 }
+
+button.manatee {
+  background-color: var(--manatee);
+  color: var(--not-quite-black);
+  border: 0;
+  border-radius: 5px;
+  padding: 0.375em 0.5em;
+  text-transform: uppercase;
+  font-size: 1em;
+}

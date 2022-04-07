@@ -1396,6 +1396,11 @@ postcss@8.4.5:
     picocolors "^1.0.0"
     source-map-js "^1.0.1"
 
+postgres@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/postgres/-/postgres-3.0.2.tgz#39062f0cb92305655858bb662ee11eefff6f03f9"
+  integrity sha512-sHkEGAnPVqRclh5oIr9S9e/VNX0/MUb2PgS9bl/0wnI8WrHhzMmxqq/fAkMZKUUrC3Lfa4qaNh1dyDPH4Q8V0w==
+
 preact-render-to-string@^5.1.19:
   version "5.1.20"
   resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.1.20.tgz#9e61a478e8514e5c4140282c7c43d9747a6d32a9"

@@ -1,5 +1,5 @@
-import Hero from "../components/Hero";
-import Layout from "../components/Layout";
+import Hero from "components/Hero";
+import Layout from "components/Layout";
 import styles from "./index.module.css";
 
 export default function Home() {

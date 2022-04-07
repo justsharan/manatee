@@ -5,7 +5,6 @@ export default async (
   int: Interaction,
   wait: (f: any) => void
 ): Promise<Response | void> => {
-  console.log(JSON.stringify(int));
   if (int.message?.interaction?.name === "trivia") {
     const options = new ActionRow();
     for (const choice of int.message.components![0].components as any[]) {

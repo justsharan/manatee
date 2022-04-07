@@ -4,3 +4,30 @@
   align-items: center;
   gap: 2em;
 }
+
+.form {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.field {
+  background-color: var(--not-quite-black);
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.field * {
+  display: block;
+}
+
+.field input {
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 0;
+  background-color: var(--dark-not-black);
+  color: var(--off-white);
+}
