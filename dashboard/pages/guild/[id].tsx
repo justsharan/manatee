@@ -32,7 +32,12 @@ const normalizeFieldName = (name: string) =>
     .map((w) => w[0].toUpperCase() + w.slice(1))
     .join(" ");
 
-export default function Guild({ guild, data }: GuildProps) {
+export default function Guild({
+  guild,
+  data,
+  channels,
+  roles,
+}: GuildProps & any) {
   return (
     <Layout>
       <div className={styles.header}>
@@ -69,12 +74,27 @@ export default function Guild({ guild, data }: GuildProps) {
         >
           {Object.entries(data)
             .filter(([k]) => k !== "id")
-            .map(([k, v]) => (
-              <div key={k} className={styles.field}>
-                <label htmlFor={k}>{normalizeFieldName(k)}</label>
-                <input name={k} defaultValue={v} />
-              </div>
-            ))}
+            .map(([k, v]) =>
+              k === "autorole" ? (
+                <div key={k} className={styles.field}>
+                  <label htmlFor={k}>{normalizeFieldName(k)}</label>
+                  <select name={k} id={k}>
+                    {roles.map((e) => (
+                      <option value={e.id}>{e.name}</option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div key={k} className={styles.field}>
+                  <label htmlFor={k}>{normalizeFieldName(k)}</label>
+                  <select name={k} id={k}>
+                    {channels.map((e) => (
+                      <option value={e.id}>{e.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )
+            )}
           <button
             type="submit"
             className="manatee"
@@ -108,10 +128,38 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     return {};
   }
 
+  const channels = await fetch(
+    `https://discord.com/api/v10/guilds/${guild.id}/channels`,
+    {
+      headers: {
+        Authorization: `Bot ${process.env.BOT_TOKEN}`,
+      },
+    }
+  );
+  if (!channels.ok) {
+    console.error(await channels.text());
+    return { notFound: true };
+  }
+
+  const roles = await fetch(
+    `https://discord.com/api/v10/guilds/${guild.id}/roles`,
+    {
+      headers: {
+        Authorization: `Bot ${process.env.BOT_TOKEN}`,
+      },
+    }
+  );
+  if (!roles.ok) {
+    console.error(await roles.text());
+    return { notFound: true };
+  }
+
   return {
     props: {
       guild,
       data: await guildData.json(),
+      channels,
+      roles,
     },
   };
 }

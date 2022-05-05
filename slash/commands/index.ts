@@ -2,6 +2,7 @@ import { CommandInteraction } from "discord-workers";
 import advice from "./advice";
 import cat from "./cat";
 import flight from "./flight";
+import map from "./map";
 import movie from "./movie";
 import trivia from "./trivia";
 import urban from "./urban";
@@ -16,6 +17,7 @@ export default {
   advice,
   cat,
   flight,
+  map,
   movie,
   trivia,
   urban,
