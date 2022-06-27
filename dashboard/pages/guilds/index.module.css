@@ -12,6 +12,7 @@
   max-width: 10vw;
   text-align: center;
   font-size: 12px;
+  cursor: pointer;
 }
 
 .list img {

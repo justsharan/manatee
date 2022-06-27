@@ -5,17 +5,21 @@ import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
 import Button from "components/Button";
 import styles from "./Layout.module.css";
+import Head from "next/head";
 
 const INVITE_LINK =
   "https://discord.com/oauth2/authorize?scope=applications.commands%20bot&client_id=643103079679393792&permissions=164752486";
 const SUPPORT_LINK = "https://discord.gg/PMzqbaVEsH";
 
-export default function Layout(props: PropsWithChildren) {
+export default function Layout(props: PropsWithChildren<{ title: string }>) {
   const t = useTranslations("Navbar");
   const { locale } = useRouter();
 
   return (
     <>
+      <Head>
+        <title>{props.title}</title>
+      </Head>
       <nav className={styles.navbar}>
         <div>
           <Link href="/" locale={locale}>
