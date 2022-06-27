@@ -26,6 +26,25 @@ async function handle(req: Request, wait: (f: any) => void): Promise<Response> {
     case InteractionType.ApplicationCommand:
       const int = new CommandInteraction(data, true);
       if (int.name in commands) {
+        const user = int.member ? int.member.user! : int.user!;
+        await fetch(
+          `https://discord.com/api/webhooks/${WEBHOOK_ID}/${WEBHOOK_TOKEN}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              content: [
+                `**Action**: \`${user.username}#${user.discriminator}\` (${user.id}) executed the \`${int.name}\` command.`,
+                `**Options**: ${Object.entries(int.options)
+                  .map(([k, v]) => `${k}:\`${v}\``)
+                  .join(" ")}`,
+                `**Time**: <t:${Math.round(Date.now() / 1000)}>`,
+              ].join("\n"),
+            }),
+          }
+        );
         return commands[int.name](int, wait);
       } else {
         return int.respond(4, {
