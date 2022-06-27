@@ -1,0 +1,15 @@
+.hero {
+  max-width: 70vw;
+  margin: 20vw auto;
+  text-align: center;
+}
+
+.hero * {
+  margin: 0;
+}
+
+.hero h1 {
+  color: var(--manatee);
+  font-size: 4em;
+  font-weight: bold;
+}

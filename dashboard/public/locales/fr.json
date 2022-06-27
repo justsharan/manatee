@@ -4,5 +4,8 @@
     "invite": "Inviter",
     "discord": "Discord",
     "signIn": "Se connecter"
+  },
+  "Home": {
+    "tagline": "Un bot Discord génial et simple qui est parfait pour votre serveur."
   }
 }
