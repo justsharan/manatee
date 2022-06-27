@@ -1,0 +1,11 @@
+.hero {
+  margin: 2em auto;
+}
+
+.hero * {
+  margin: 0;
+}
+
+.manatee {
+  color: var(--manatee);
+}

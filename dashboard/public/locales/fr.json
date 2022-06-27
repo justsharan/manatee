@@ -7,5 +7,9 @@
   },
   "Home": {
     "tagline": "Un bot Discord génial et simple qui est parfait pour votre serveur."
+  },
+  "Guilds": {
+    "title": "Bienvenue à Manatee!",
+    "subtitle": "Choisissez un serveur."
   }
 }

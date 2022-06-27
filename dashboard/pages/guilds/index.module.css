@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2em;
+  flex-wrap: wrap;
+  max-width: 70vw;
+  margin: 0 auto;
+}
+
+.list div {
+  max-width: 10vw;
+  text-align: center;
+  font-size: 12px;
+}
+
+.list img {
+  border-radius: 50%;
+}
