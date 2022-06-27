@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  gap: 1em;
+}
+
+.header * {
+  margin: 0;
+}
+
+.header img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+}

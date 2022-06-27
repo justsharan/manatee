@@ -7,7 +7,7 @@ import Hero from "components/Hero";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 
-interface UserGuild {
+export interface UserGuild {
   id: string;
   name: string;
   icon: string;

@@ -11,5 +11,8 @@
   "Guilds": {
     "title": "Welcome to Manatee!",
     "subtitle": "Choose a server."
+  },
+  "Guild": {
+    "subtitle": "Settings for"
   }
 }
