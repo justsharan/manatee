@@ -1,21 +1,26 @@
 import Layout from "components/Layout";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { UserGuild } from ".";
 import Hero from "components/Hero";
 import { useTranslations } from "next-intl";
 import styles from "./[id].module.css";
 import { useEffect, useState } from "react";
 import Spinner from "components/Spinner";
 import { Guild } from "types/discord";
+import { DBGuild } from "types/database";
 import { iconURL, truncateName } from "utils/guild";
+import { useSession } from "next-auth/react";
 
 export default function GuildSettings() {
   const t = useTranslations("Guild");
   const router = useRouter();
+  const { status } = useSession();
+  if (status === "unauthenticated") {
+    router.push("/");
+  }
 
   const [guild, setGuild] = useState<Guild>();
-  const [settings, setSettings] = useState();
+  const [settings, setSettings] = useState<DBGuild>();
 
   useEffect(() => {
     (async () => {
@@ -50,10 +55,34 @@ export default function GuildSettings() {
           reversed
         />
       </div>
-      <section>
-        {Object.keys(settings).map((s, i) => (
-          <p key={i}>{s}</p>
-        ))}
+      <section className={styles.settings}>
+        <form onSubmit={(evt) => evt.preventDefault()}>
+          <div>
+            <label htmlFor="autorole">Autorole</label>
+            <input value={settings.autorole ?? ""} name="autorole" />
+          </div>
+
+          <div>
+            <label htmlFor="mod_log">Moderation Log</label>
+            <input value={settings.mod_log ?? ""} name="mod_log" />
+          </div>
+
+          <div>
+            <label htmlFor="member_log">Member Log</label>
+            <input value={settings.member_log ?? ""} name="member_log" />
+          </div>
+
+          <div>
+            <label htmlFor="message_log">Message Log</label>
+            <input value={settings.message_log ?? ""} name="message_log" />
+          </div>
+
+          <div>
+            <button className="btn" type="submit">
+              Save
+            </button>
+          </div>
+        </form>
       </section>
     </Layout>
   );

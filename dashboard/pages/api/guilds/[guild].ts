@@ -10,6 +10,15 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   ]);
   await sql.clean();
   return result.rows.length
-    ? res.status(200).json(result.rows[0])
+    ? res.status(200).json(formatResult(result.rows[0]))
     : res.status(404).send("No guild found");
+}
+
+function formatResult(
+  obj: Record<string, string>
+): Record<string, string | null> {
+  return Object.entries(obj).reduce(
+    (acc, [k, v]) => ({ ...acc, [k]: v === "NULL" ? null : v }),
+    {}
+  );
 }

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
-import Button from "components/Button";
 import styles from "./Layout.module.css";
 import Head from "next/head";
 import { useSession, signIn, signOut } from "next-auth/react";
@@ -37,20 +36,23 @@ export default function Layout(props: PropsWithChildren<{ title: string }>) {
                 <p>{data.user.name}</p>
               </div>
             </Link>
-            <Button onClick={() => signOut()}>{t("signOut")}</Button>
+            <button onClick={() => signOut()} className="btn">
+              {t("signOut")}
+            </button>
           </div>
         )}
         {!data && (
-          <Button
+          <button
             onClick={() =>
               signIn("discord", {
                 callbackUrl:
                   locale === defaultLocale ? "/guilds" : `/${locale}/guilds`,
               })
             }
+            className="btn"
           >
             {t("signIn")}
-          </Button>
+          </button>
         )}
       </nav>
       <main className={styles.content}>{props.children}</main>

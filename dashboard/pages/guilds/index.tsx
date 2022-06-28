@@ -12,20 +12,10 @@ import { iconURL, truncateName } from "utils/guild";
 import Spinner from "components/Spinner";
 import { Guild } from "types/discord";
 
-export interface UserGuild {
-  id: string;
-  name: string;
-  icon: string;
-  owner: boolean;
-  permissions: string;
-  features: string[];
-}
-
 export default function Guilds() {
   const t = useTranslations("Guilds");
   const { locale, ...router } = useRouter();
   const { status } = useSession();
-
   if (status === "unauthenticated") {
     router.push("/");
   }
