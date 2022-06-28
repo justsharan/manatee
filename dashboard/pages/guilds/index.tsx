@@ -48,49 +48,44 @@ export default function Guilds() {
     })();
   }, []);
 
-  // Show spinner if data isn't ready yet
-  if (!guilds || !botGuilds) {
-    return (
-      <Layout title="Servers">
-        <Spinner />
-      </Layout>
-    );
-  }
-
   // Render Guild picker page
   return (
     <Layout title="Servers">
       <Hero title={t("title")} subtitle={t("subtitle")} color />
-      <div className={styles.list}>
-        {guilds
-          .filter((g) => Number(g.permissions) & (1 << 5))
-          .map((guild) => (
-            <Link
-              href={
-                botGuilds.includes(guild.id)
-                  ? `/guilds/${guild.id}`
-                  : `/invite?guild_id=${guild.id}`
-              }
-              locale={locale}
-              key={guild.id}
-            >
-              <div>
-                {botGuilds.includes(guild.id) && (
-                  <Image src={iconURL(guild)} width={75} height={75} />
-                )}
-                {!botGuilds.includes(guild.id) && (
-                  <Image
-                    src={iconURL(guild)}
-                    width={75}
-                    height={75}
-                    className={styles.grayscale}
-                  />
-                )}
-                <p>{truncateName(guild.name)}</p>
-              </div>
-            </Link>
-          ))}
-      </div>
+      {botGuilds.length ? (
+        <div className={styles.list}>
+          {guilds
+            .filter((g) => Number(g.permissions) & (1 << 5))
+            .map((guild) => (
+              <Link
+                href={
+                  botGuilds.includes(guild.id)
+                    ? `/guilds/${guild.id}`
+                    : `/invite?guild_id=${guild.id}`
+                }
+                locale={locale}
+                key={guild.id}
+              >
+                <div>
+                  {botGuilds.includes(guild.id) && (
+                    <Image src={iconURL(guild)} width={75} height={75} />
+                  )}
+                  {!botGuilds.includes(guild.id) && (
+                    <Image
+                      src={iconURL(guild)}
+                      width={75}
+                      height={75}
+                      className={styles.grayscale}
+                    />
+                  )}
+                  <p>{truncateName(guild.name)}</p>
+                </div>
+              </Link>
+            ))}
+        </div>
+      ) : (
+        <Spinner />
+      )}
     </Layout>
   );
 }
