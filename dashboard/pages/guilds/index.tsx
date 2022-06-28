@@ -8,6 +8,9 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { iconURL, truncateName } from "utils/guild";
+import Spinner from "components/Spinner";
+import { Guild } from "types/discord";
 
 export interface UserGuild {
   id: string;
@@ -18,72 +21,81 @@ export interface UserGuild {
   features: string[];
 }
 
-export default function Guilds(props: {
-  guilds: UserGuild[];
-  guildsWithBot: string[];
-}) {
+export default function Guilds() {
   const t = useTranslations("Guilds");
   const { locale, ...router } = useRouter();
-  const { data, status } = useSession();
+  const { status } = useSession();
 
   if (status === "unauthenticated") {
     router.push("/");
   }
 
-  const [guilds, setGuilds] = useState([]);
-  const [botGuilds, setBotGuilds] = useState([]);
-
-  const fetchGuilds = async () => {
-    const storedGuilds = localStorage.getItem("guilds");
-    if (!storedGuilds) {
-      const res = await fetch("/api/guilds/user");
-      const body = await res.json();
-      localStorage.setItem("guilds", JSON.stringify(body));
-    }
-    const guilds = JSON.parse(localStorage.getItem("guilds"));
-    const botGuildsRes = await fetch(
-      `/api/guilds/check?guilds=${guilds.map((g) => g.id).join(",")}`
-    );
-    setBotGuilds(await botGuildsRes.json());
-    setGuilds(guilds);
-  };
+  const [guilds, setGuilds] = useState<Guild[]>([]);
+  const [botGuilds, setBotGuilds] = useState<string[]>([]);
 
   useEffect(() => {
-    fetchGuilds();
+    (async () => {
+      // Get guilds from localStorage or set it
+      let localInfo = localStorage.getItem("guilds");
+      if (!localInfo) {
+        const res = await fetch("/api/guilds/user");
+        const body = await res.text();
+        localStorage.setItem("guilds", body);
+      }
+
+      setGuilds(JSON.parse(localStorage.getItem("guilds")));
+
+      // Get guilds that the bot is in
+      const botGuilds = await fetch(
+        `/api/guilds/check?guilds=${guilds.map((g) => g.id).join(",")}`
+      );
+      setBotGuilds(await botGuilds.json());
+    })();
   }, []);
 
+  // Show spinner if data isn't ready yet
+  if (!guilds || !botGuilds) {
+    return (
+      <Layout title="Servers">
+        <Spinner />
+      </Layout>
+    );
+  }
+  console.log({ guilds, botGuilds });
+
+  // Render Guild picker page
   return (
     <Layout title="Servers">
       <Hero title={t("title")} subtitle={t("subtitle")} color />
       <div className={styles.list}>
         {guilds
           .filter((g) => Number(g.permissions) & (1 << 5))
-          .map(({ id, icon, name }) =>
-            botGuilds.includes(id) ? (
-              <Link href={`/guilds/${id}`} locale={locale} key={id}>
-                <div>
+          .map((guild) => (
+            <Link
+              href={
+                botGuilds.includes(guild.id)
+                  ? `/guilds/${guild.id}`
+                  : `/invite?guild_id=${guild.id}`
+              }
+              locale={locale}
+              key={guild.id}
+            >
+              <div>
+                {botGuilds.includes(guild.id) && (
+                  <Image src={iconURL(guild)} width={75} height={75} />
+                )}
+                {!botGuilds.includes(guild.id) && (
                   <Image
-                    src={`https://cdn.discordapp.com/icons/${id}/${icon}.png?size=256`}
-                    width={75}
-                    height={75}
-                  />
-                  <p>{name.length > 25 ? name.slice(0, 20) + "..." : name}</p>
-                </div>
-              </Link>
-            ) : (
-              <Link href={`/invite?guild_id=${id}`} locale={locale} key={id}>
-                <div>
-                  <Image
-                    src={`https://cdn.discordapp.com/icons/${id}/${icon}.png?size=256`}
+                    src={iconURL(guild)}
                     width={75}
                     height={75}
                     className={styles.grayscale}
                   />
-                  <p>{name.length > 25 ? name.slice(0, 20) + "..." : name}</p>
-                </div>
-              </Link>
-            )
-          )}
+                )}
+                <p>{truncateName(guild.name)}</p>
+              </div>
+            </Link>
+          ))}
       </div>
     </Layout>
   );
