@@ -1,5 +1,4 @@
 import { PropsWithChildren } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTranslations } from "next-intl";
@@ -16,6 +15,12 @@ export default function Layout(props: PropsWithChildren<{ title: string }>) {
     <>
       <Head>
         <title>{props.title}</title>
+        <link rel="shortcut icon" type="image/png" href="manatee.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="1024x1024"
+          href="apple-touch-icon.jpg"
+        />
       </Head>
       <nav className={styles.navbar}>
         <div className={styles.navleft}>
