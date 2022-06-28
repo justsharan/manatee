@@ -38,18 +38,23 @@ export default function Guilds() {
       // Get guilds from localStorage or set it
       let localInfo = localStorage.getItem("guilds");
       if (!localInfo) {
+        console.log("No guilds in local storage... fetching from Discord");
         const res = await fetch("/api/guilds/user");
         const body = await res.text();
         localStorage.setItem("guilds", body);
       }
 
-      setGuilds(JSON.parse(localStorage.getItem("guilds")));
+      const guilds = JSON.parse(localStorage.getItem("guilds"));
+      setGuilds(guilds);
 
-      // Get guilds that the bot is in
-      const botGuilds = await fetch(
-        `/api/guilds/check?guilds=${guilds.map((g) => g.id).join(",")}`
-      );
-      setBotGuilds(await botGuilds.json());
+      if (!botGuilds.length) {
+        console.log("No bot guilds defined... fetching from server");
+        // Get guilds that the bot is in
+        const botGuilds = await fetch(
+          `/api/guilds/check?guilds=${guilds.map((g) => g.id).join(",")}`
+        );
+        setBotGuilds(await botGuilds.json());
+      }
     })();
   }, []);
 
@@ -61,7 +66,6 @@ export default function Guilds() {
       </Layout>
     );
   }
-  console.log({ guilds, botGuilds });
 
   // Render Guild picker page
   return (
