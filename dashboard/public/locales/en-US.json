@@ -3,7 +3,8 @@
     "docs": "Docs",
     "invite": "Invite",
     "discord": "Discord",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
   },
   "Home": {
     "tagline": "An awesome, easy-to-use Discord bot that's perfect for your server."

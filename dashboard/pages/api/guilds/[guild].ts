@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import PGClient from "serverless-postgres";
 
-const sql = new PGClient({ connectionString: process.env.DATABASE_URL });
+export const sql = new PGClient({ connectionString: process.env.DATABASE_URL });
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   await sql.connect();

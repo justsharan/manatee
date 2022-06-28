@@ -11,9 +11,12 @@ type ButtonProps = {
 export default function Button(props: PropsWithChildren<ButtonProps>) {
   return (
     <div className={styles.btn}>
-      <Link href={props.href} onClick={props.onClick} locale={props.locale}>
-        {props.children}
-      </Link>
+      {props.href && (
+        <Link href={props.href} locale={props.locale}>
+          {props.children}
+        </Link>
+      )}
+      {props.onClick && <a onClick={props.onClick}>{props.children}</a>}
     </div>
   );
 }

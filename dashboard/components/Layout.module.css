@@ -7,11 +7,32 @@
   align-items: center;
 }
 
-.navbar :first-child {
+.navleft {
   display: flex;
   flex-direction: row;
   gap: 2em;
   align-items: center;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.user div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
+.user img {
+  width: 2.15em;
+  height: 2.15em;
+  border-radius: 50%;
 }
 
 .content {
