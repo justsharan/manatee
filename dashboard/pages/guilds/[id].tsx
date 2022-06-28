@@ -1,5 +1,5 @@
 import Layout from "components/Layout";
-import { GetStaticPropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import Hero from "components/Hero";
 import { useTranslations } from "next-intl";
@@ -94,7 +94,9 @@ export default function GuildSettings() {
 }
 
 // Load translations
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getServerSideProps({
+  locale,
+}: GetServerSidePropsContext) {
   return {
     props: {
       messages: (await import(`public/locales/${locale}.json`)).default,
