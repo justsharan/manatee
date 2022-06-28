@@ -56,7 +56,12 @@ export default function GuildSettings() {
         />
       </div>
       <section className={styles.settings}>
-        <form onSubmit={(evt) => evt.preventDefault()}>
+        <form
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            alert("Implement save logic");
+          }}
+        >
           <div>
             <label htmlFor="autorole">Autorole</label>
             <input value={settings.autorole ?? ""} name="autorole" />
