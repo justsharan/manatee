@@ -32,7 +32,7 @@
 }
 
 .settings label {
-  font-size: 14px;
+  font-size: 12px;
   margin: 5px;
 }
 
@@ -44,4 +44,8 @@
   background-color: var(--dark-not-black);
   color: var(--off-white);
   text-align: center;
+}
+
+.settings button {
+  grid-column-start: 1;
 }

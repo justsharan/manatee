@@ -14,6 +14,11 @@
     "subtitle": "Choose a server."
   },
   "Guild": {
-    "subtitle": "Settings for"
+    "subtitle": "Settings for",
+    "autorole": "Autorole",
+    "mod_log": "Moderation Log",
+    "message_log": "Message Log",
+    "member_log": "Member Log",
+    "save": "Save"
   }
 }

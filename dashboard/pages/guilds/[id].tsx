@@ -63,28 +63,28 @@ export default function GuildSettings() {
           }}
         >
           <div>
-            <label htmlFor="autorole">Autorole</label>
+            <label htmlFor="autorole">{t("autorole")}</label>
             <input value={settings.autorole ?? ""} name="autorole" />
           </div>
 
           <div>
-            <label htmlFor="mod_log">Moderation Log</label>
+            <label htmlFor="mod_log">{t("mod_log")}</label>
             <input value={settings.mod_log ?? ""} name="mod_log" />
           </div>
 
           <div>
-            <label htmlFor="member_log">Member Log</label>
+            <label htmlFor="member_log">{t("member_log")}</label>
             <input value={settings.member_log ?? ""} name="member_log" />
           </div>
 
           <div>
-            <label htmlFor="message_log">Message Log</label>
+            <label htmlFor="message_log">{t("message_log")}</label>
             <input value={settings.message_log ?? ""} name="message_log" />
           </div>
 
           <div>
             <button className="btn" type="submit">
-              Save
+              {t("save")}
             </button>
           </div>
         </form>
