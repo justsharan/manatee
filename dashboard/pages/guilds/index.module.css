@@ -5,7 +5,12 @@
   gap: 2em;
   flex-wrap: wrap;
   max-width: 70vw;
-  margin: 0 auto;
+  margin: 5em auto;
+}
+
+.grayscale {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .list div {
