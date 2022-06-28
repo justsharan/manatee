@@ -14,6 +14,11 @@
   align-items: center;
 }
 
+.navleft img {
+  width: 3em;
+  height: 3em;
+}
+
 .user {
   display: flex;
   flex-direction: row;
@@ -38,4 +43,13 @@
 .content {
   max-width: 70vw;
   margin: 4em auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .navleft a {
+    display: none;
+  }
+  .navbar {
+    flex-direction: column;
+  }
 }

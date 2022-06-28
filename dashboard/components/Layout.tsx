@@ -20,7 +20,7 @@ export default function Layout(props: PropsWithChildren<{ title: string }>) {
       <nav className={styles.navbar}>
         <div className={styles.navleft}>
           <Link href="/" locale={locale}>
-            <Image src="/manatee.png" width={50} height={50} />
+            <img src="/manatee.png" />
           </Link>
           <Link href="/docs" locale={locale}>
             {t("docs")}
