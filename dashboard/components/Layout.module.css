@@ -17,6 +17,7 @@
 .navleft img {
   width: 3em;
   height: 3em;
+  cursor: pointer;
 }
 
 .user {

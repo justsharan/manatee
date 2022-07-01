@@ -37,7 +37,7 @@ export default function Layout(props: PropsWithChildren<{ title: string }>) {
           <div className={styles.user}>
             <Link href="/guilds" locale={locale}>
               <div>
-                <img src="https://cdn.discordapp.com/avatars/281193735788953601/59b9e61d45d9d40fbbe04cac85e7ab18.jpg?size=128" />
+                <img src={data.user.image} />
                 <p>{data.user.name}</p>
               </div>
             </Link>
