@@ -25,6 +25,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       req.query.guild,
     ]
   );
-  console.log({ body, ans: result.rows[0] });
+
   return res.status(200).json(result.rows[0]);
 }

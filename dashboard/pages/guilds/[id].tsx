@@ -10,6 +10,7 @@ import { Guild } from "types/discord";
 import { DBGuild } from "types/database";
 import { iconURL, truncateName } from "utils/guild";
 import { useSession } from "next-auth/react";
+import { Field, Form, Formik } from "formik";
 
 export default function GuildSettings() {
   const t = useTranslations("Guild");
@@ -56,38 +57,39 @@ export default function GuildSettings() {
         />
       </div>
       <section className={styles.settings}>
-        <form
-          onSubmit={(evt) => {
-            evt.preventDefault();
-            alert("Implement save logic");
-          }}
+        <Formik
+          initialValues={settings}
+          onSubmit={(values, { setSubmitting }) =>
+            fetch(`/api/guilds/edit/${guild.id}`, {
+              method: "POST",
+              body: JSON.stringify({ ...values, id: undefined }),
+            })
+          }
         >
-          <div>
-            <label htmlFor="autorole">{t("autorole")}</label>
-            <input value={settings.autorole ?? ""} name="autorole" />
-          </div>
-
-          <div>
-            <label htmlFor="mod_log">{t("mod_log")}</label>
-            <input value={settings.mod_log ?? ""} name="mod_log" />
-          </div>
-
-          <div>
-            <label htmlFor="member_log">{t("member_log")}</label>
-            <input value={settings.member_log ?? ""} name="member_log" />
-          </div>
-
-          <div>
-            <label htmlFor="message_log">{t("message_log")}</label>
-            <input value={settings.message_log ?? ""} name="message_log" />
-          </div>
-
-          <div>
-            <button className="btn" type="submit">
-              {t("save")}
-            </button>
-          </div>
-        </form>
+          {({ isSubmitting }) => (
+            <Form>
+              <div>
+                <label htmlFor="autorole">{t("autorole")}</label>
+                <Field name="autorole" />
+              </div>
+              <div>
+                <label htmlFor="autorole">{t("mod_log")}</label>
+                <Field name="mod_log" />
+              </div>
+              <div>
+                <label htmlFor="autorole">{t("member_log")}</label>
+                <Field name="member_log" />
+              </div>
+              <div>
+                <label htmlFor="autorole">{t("message_log")}</label>
+                <Field name="message_log" />
+              </div>
+              <button type="submit" disabled={isSubmitting} className="btn">
+                Save
+              </button>
+            </Form>
+          )}
+        </Formik>
       </section>
     </Layout>
   );
