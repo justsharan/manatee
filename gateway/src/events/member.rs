@@ -8,13 +8,14 @@ use twilight_model::{
 pub async fn guild_member_add(ctx: Context, member: Member) -> Result<(), sqlx::Error> {
   println!("Member joined: {}", member.user.id);
 
-  let guilds = sqlx::query!("SELECT autorole, member_log FROM guilds WHERE id = $1;", member.guild_id.get().to_string())
+  let guild_id = member.guild_id.get().to_string();
+  let guilds = sqlx::query!("SELECT autorole, member_log FROM guilds WHERE id = $1;", guild_id)
     .fetch_all(&ctx.pool)
     .await?;
 
   // Send member log if enabled
   if guilds[0].member_log.is_some() {
-    ctx.http.create_message(Id::new(guilds[0].member_log.as_ref().unwrap().parse::<u64>().unwrap()))
+    let res = ctx.http.create_message(Id::new(guilds[0].member_log.as_ref().unwrap().parse::<u64>().unwrap()))
       .content(
         &format!(
           "📥 **{}#{}** ({}) has joined the server.\nAccount created: <t:{}>",
@@ -23,7 +24,12 @@ pub async fn guild_member_add(ctx: Context, member: Member) -> Result<(), sqlx::
           member.user.id.get().to_string(),
           ((member.user.id.get() >> 22) + 1420070400000) / 1000
         )
-      ).unwrap().exec().await.unwrap();
+      ).unwrap().exec().await;
+    // Remove member_log from entry if unable to send messages to it
+    if !res.is_ok() {
+      sqlx::query!("UPDATE guilds SET member_log = NULL WHERE id = $1;", guild_id)
+        .fetch(&ctx.pool);
+    }
   }
 
   // Check if member is pending before assigning autorole
@@ -33,24 +39,32 @@ pub async fn guild_member_add(ctx: Context, member: Member) -> Result<(), sqlx::
 
   // Add autorole if enabled
   if guilds[0].autorole.is_some() {
-    ctx.http.add_guild_member_role(
+    let res = ctx.http.add_guild_member_role(
       member.guild_id,
       member.user.id,
       Id::new(guilds[0].autorole.as_ref().unwrap().parse::<u64>().unwrap())
-    ).exec().await.unwrap();
+    ).exec().await;
+    if !res.is_ok() {
+     // Remove autorole from entry if unable to send messages to it
+      if !res.is_ok() {
+        sqlx::query!("UPDATE guilds SET autorole = NULL WHERE id = $1;", guild_id)
+          .fetch(&ctx.pool);
+      }
+    }
   }
 
   Ok(())
 }
 
 pub async fn guild_member_remove(ctx: Context, payload: MemberRemove) -> Result<(), sqlx::Error> {
-  let guilds = sqlx::query!("SELECT member_log FROM guilds WHERE id = $1;", payload.guild_id.get().to_string())
+  let guild_id = payload.guild_id.get().to_string();
+  let guilds = sqlx::query!("SELECT member_log FROM guilds WHERE id = $1;", guild_id)
     .fetch_all(&ctx.pool)
     .await?;
 
   // Send member log if enabled
   if guilds[0].member_log.is_some() {
-    ctx.http.create_message(Id::new(guilds[0].member_log.as_ref().unwrap().parse::<u64>().unwrap()))
+    let res = ctx.http.create_message(Id::new(guilds[0].member_log.as_ref().unwrap().parse::<u64>().unwrap()))
       .content(
         &format!(
           "📤 **{}#{}** ({}) has left the server.\nAccount created: <t:{}>",
@@ -59,7 +73,12 @@ pub async fn guild_member_remove(ctx: Context, payload: MemberRemove) -> Result<
           payload.user.id.get().to_string(),
           ((payload.user.id.get() >> 22) + 1420070400000) / 1000
         )
-      ).unwrap().exec().await.unwrap();
+      ).unwrap().exec().await;
+    // Remove member_log from entry if unable to send messages to it
+    if !res.is_ok() {
+      sqlx::query!("UPDATE guilds SET member_log = NULL WHERE id = $1;", guild_id)
+        .fetch(&ctx.pool);
+    }
   }
 
   Ok(())
