@@ -18,10 +18,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const result = await sql.query(
     "UPDATE guilds SET autorole = $1, mod_log = $2, member_log = $3, message_log = $4 WHERE id = $5 RETURNING *;",
     [
-      body.autorole || "NULL",
-      body.mod_log || "NULL",
-      body.member_log || "NULL",
-      body.message_log || "NULL",
+      body.autorole || null,
+      body.mod_log || null,
+      body.member_log || null,
+      body.message_log || null,
       req.query.guild,
     ]
   );
