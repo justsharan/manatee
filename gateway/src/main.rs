@@ -4,6 +4,7 @@ use std::{ env, error::Error, sync::Arc };
 use twilight_gateway::{ Intents, Shard };
 use twilight_http::Client;
 
+mod commands;
 mod events;
 
 type Context = Arc<ContextValue>;
