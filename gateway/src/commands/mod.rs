@@ -1,11 +1,13 @@
-use twilight_http::client::InteractionClient;
 use twilight_model::application::interaction::ApplicationCommand;
+use twilight_http::client::InteractionClient;
 
 mod cat;
 
-pub async fn handle_command(int_client: InteractionClient<'_>, int: ApplicationCommand) {
+pub use cat::get_cat;
+
+pub async fn handle_command(ctx: InteractionClient<'_>, int: ApplicationCommand) {
   match int.data.name.as_str() {
-    "cat" => cat::execute(int_client, int).await.unwrap(),
-    _ => println!("Unknown command")
-  }
+    "cat" => cat::execute(ctx, int).await.unwrap(),
+    _ => println!("Unrecognized command"),
+  };
 }

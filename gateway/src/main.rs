@@ -5,6 +5,7 @@ use twilight_gateway::{ Intents, Shard };
 use twilight_http::Client;
 
 mod commands;
+mod components;
 mod events;
 
 type Context = Arc<ContextValue>;

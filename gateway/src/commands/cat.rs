@@ -1,33 +1,27 @@
-use serde::{ Deserialize, Serialize };
 use std::error::Error;
 use twilight_http::client::InteractionClient;
 use twilight_model::{
-  application::interaction::ApplicationCommand,
-  http::interaction::{
-    InteractionResponse,
-    InteractionResponseType,
-    InteractionResponseData
+  application::{
+    component::{ ActionRow, Button, button::ButtonStyle, Component },
+    interaction::ApplicationCommand,
+  },
+  channel::ReactionType,
+  http::{
+    attachment::Attachment,
+    interaction::{
+      InteractionResponse,
+      InteractionResponseType,
+      InteractionResponseData,
+    },
   },
 };
 
-#[derive(Serialize, Deserialize)]
-struct CatInfo {
-  pub breeds: Vec<String>,
-  pub id: String,
-  pub url: String,
-  pub width: i8,
-  pub height: i8,
-}
-
 #[allow(unused_must_use)]
 pub async fn execute(ctx: InteractionClient<'_>, int: ApplicationCommand) -> Result<(), Box<dyn Error>> {
-  // Get cat URL from API
-  let resp: Vec<CatInfo> = reqwest::get("https://api.thecatapi.com/v1/images/search")
-    .await?
-    .json()
-    .await?;
+  // Get cat image
+  let img = get_cat().await?;
 
-  // Send cat URL as response
+  // Respond with cat image as an attachment
   ctx.create_response(
     int.id,
     int.token.as_str(),
@@ -35,17 +29,42 @@ pub async fn execute(ctx: InteractionClient<'_>, int: ApplicationCommand) -> Res
       kind: InteractionResponseType::ChannelMessageWithSource,
       data: Some(InteractionResponseData {
         allowed_mentions: None,
-        attachments: None,
+        attachments: Some(vec![
+          Attachment::from_bytes("cat.jpg".to_string(), img, 1),
+        ]),
         custom_id: None,
         choices: None,
-        components: None,
-        content: Some(resp[0].url.clone()),
+        components: Some(vec![
+          Component::ActionRow(ActionRow{
+            components: vec![
+              Component::Button(Button{
+                custom_id: Some(String::from("cat_reload")),
+                disabled: false,
+                emoji: Some(ReactionType::Unicode{ name: String::from("🐱") }),
+                label: Some(String::from("New Cat!")),
+                style: ButtonStyle::Secondary,
+                url: None,
+              }),
+            ]
+          }),
+        ]),
+        content: None,
         embeds: None,
         flags: None,
         title: None,
         tts: None,
       }),
-  });
+    }
+  ).exec().await;
 
   Ok(())
+}
+
+pub async fn get_cat() -> Result<Vec<u8>, Box<dyn Error>> {
+  let img = reqwest::get("https://api.thecatapi.com/v1/images/search?format=src")
+    .await?
+    .bytes()
+    .await?;
+  
+  Ok(img.to_vec())
 }
