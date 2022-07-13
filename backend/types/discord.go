@@ -44,7 +44,7 @@ const (
 )
 
 type AllowedMentions struct {
-	Parse       []string `json:"parse"`
+	Parse       []string `json:"parse,omitempty"`
 	Roles       []string `json:"roles,omitempty"`
 	Users       []string `json:"users,omitempty"`
 	RepliedUser bool     `json:"replied_user,omitempty"`
