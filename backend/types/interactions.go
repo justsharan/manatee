@@ -23,7 +23,7 @@ type Interaction struct {
 	User           User                   `json:"user"`
 	Token          string                 `json:"token"`
 	Version        uint8                  `json:"version"`
-	Message        interface{}            `json:"message"`
+	Message        Message                `json:"message"`
 	AppPermissions uint64                 `json:"app_permissions,string"`
 	Locale         string                 `json:"locale"`
 	GuildLocale    string                 `json:"guild_locale"`

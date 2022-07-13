@@ -96,3 +96,9 @@ type EmbedField struct {
 	Value  string `json:"value"`
 	Inline bool   `json:"inline,omitempty"`
 }
+
+type Message struct {
+	ID         Snowflake   `json:"id"`
+	Content    string      `json:"content"`
+	Components []ActionRow `json:"components"`
+}
