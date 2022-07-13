@@ -39,6 +39,16 @@ func (i *Interaction) Respond(resp InteractionResponse) error {
 	return json.NewEncoder(i.ResponseWriter).Encode(resp)
 }
 
+func (i *Interaction) Error(message string) error {
+	return i.Respond(InteractionResponse{
+		Type: ResponseChannelMessageWithSource,
+		Data: ResponseData{
+			Content: message,
+			Flags:   FlagEphemeral,
+		},
+	})
+}
+
 func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reader) error {
 	if len(resp.Data.Attachments) != len(files) {
 		return errors.New("number of attachment objects doesn't equal number of files")
