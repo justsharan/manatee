@@ -162,8 +162,8 @@ func (opt ApplicationCommandInteractionDataOption) StringValue() string {
 	return opt.Value.(string)
 }
 
-func (opt ApplicationCommandInteractionDataOption) IntValue() uint {
-	return opt.Value.(uint)
+func (opt ApplicationCommandInteractionDataOption) IntValue() float64 {
+	return opt.Value.(float64)
 }
 
 type OptionType uint8

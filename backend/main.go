@@ -8,12 +8,13 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 )
 
 var (
 	port      = flag.Int("port", 3000, "The port to listen to requests on")
-	publicKey = flag.String("pubkey", "", "The public key for requests")
+	publicKey = os.Getenv("PUBLIC_KEY")
 )
 
 func init() {
