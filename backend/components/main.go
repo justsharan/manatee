@@ -11,5 +11,7 @@ func HandleComponents(w http.ResponseWriter, i *types.Interaction) {
 	switch data.CustomID {
 	case "cat_reload":
 		catReload(i, data)
+	case "correct", "incorrect_0", "incorrect_1", "incorrect_2":
+		trivia(i, data)
 	}
 }
