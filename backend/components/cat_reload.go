@@ -1,21 +1,14 @@
-package commands
+package components
 
 import (
+	"backend/commands"
 	"backend/types"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-type CatDetails struct {
-	Breeds []string `json:"breeds"`
-	ID     string   `json:"id"`
-	URL    string   `json:"url"`
-	Width  uint     `json:"width"`
-	Height uint     `json:"height"`
-}
-
-func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
+func catReload(i *types.Interaction, data *types.MessageComponentInteractionData) {
 	resp, err := http.Get("https://api.thecatapi.com/v1/images/search")
 	if err != nil {
 		i.Respond(types.InteractionResponse{
@@ -27,7 +20,7 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 		})
 	}
 
-	var details []CatDetails
+	var details []commands.CatDetails
 
 	defer resp.Body.Close()
 	if err = json.NewDecoder(resp.Body).Decode(&details); err != nil {

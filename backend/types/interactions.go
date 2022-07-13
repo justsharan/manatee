@@ -59,7 +59,6 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reade
 	}
 
 	writer.Close()
-	fmt.Println(body.String())
 
 	_, err := http.Post(
 		fmt.Sprintf("https://discord.com/api/v10/interactions/%s/%s/callback", i.ID, i.Token),

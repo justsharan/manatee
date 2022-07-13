@@ -15,6 +15,7 @@ type ActionRow struct {
 }
 
 type Button struct {
+	Type     ComponentType  `json:"type"`
 	Label    string         `json:"label"`
 	Style    ButtonStyle    `json:"style"`
 	Disabled bool           `json:"disabled"`

@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/commands"
+	"backend/components"
 	"backend/types"
 	"encoding/json"
 	"flag"
@@ -51,6 +52,8 @@ func interactions(w http.ResponseWriter, r *http.Request) {
 		}
 	case types.InteractionApplicationCommand:
 		commands.HandleCommands(w, &data)
+	case types.InteractionMessageComponent:
+		components.HandleComponents(w, &data)
 	}
 
 }
