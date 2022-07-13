@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func verify(r *http.Request, key ed25519.PublicKey) bool {
+func verify(r *http.Request) bool {
 	var msg bytes.Buffer
 
 	signature := r.Header.Get("X-Signature-Ed25519")
@@ -18,6 +18,11 @@ func verify(r *http.Request, key ed25519.PublicKey) bool {
 	}
 
 	sig, err := hex.DecodeString(signature)
+	if err != nil {
+		return false
+	}
+
+	key, err := hex.DecodeString(*publicKey)
 	if err != nil {
 		return false
 	}
@@ -45,5 +50,5 @@ func verify(r *http.Request, key ed25519.PublicKey) bool {
 		return false
 	}
 
-	return ed25519.Verify(key, msg.Bytes(), sig)
+	return ed25519.Verify(ed25519.PublicKey(key), msg.Bytes(), sig)
 }
