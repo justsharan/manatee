@@ -49,7 +49,7 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reade
 
 	for i, file := range files {
 		fmt.Println(i)
-		part, _ := writer.CreateFormFile(fmt.Sprintf("[%d]", i), resp.Data.Attachments[i].Filename)
+		part, _ := writer.CreateFormFile(fmt.Sprintf("files[%d]", i), resp.Data.Attachments[i].Filename)
 		io.Copy(part, file)
 	}
 
@@ -61,11 +61,16 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reade
 	writer.Close()
 	fmt.Println(body.String())
 
-	i.ResponseWriter.Header().Set("Content-Type", writer.FormDataContentType())
-	if _, err := body.WriteTo(i.ResponseWriter); err != nil {
+	_, err := http.Post(
+		fmt.Sprintf("https://discord.com/api/v10/interactions/%s/%s/callback", i.ID, i.Token),
+		writer.FormDataContentType(),
+		body,
+	)
+	if err != nil {
 		return err
 	}
 
+	i.ResponseWriter.WriteHeader(200)
 	return nil
 }
 

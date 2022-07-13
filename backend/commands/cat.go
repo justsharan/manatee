@@ -2,6 +2,7 @@ package commands
 
 import (
 	"backend/types"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -18,7 +19,7 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 		})
 	}
 
-	i.RespondWithFile(types.InteractionResponse{
+	err = i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
 			Attachments: []types.Attachment{{
@@ -28,4 +29,7 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 			}},
 		},
 	}, []io.Reader{resp.Body})
+	if err != nil {
+		fmt.Println(err)
+	}
 }
