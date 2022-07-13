@@ -1,7 +1,12 @@
 package types
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"mime/multipart"
 	"net/http"
 )
 
@@ -32,6 +37,36 @@ func (i *Interaction) SetResponseWriter(w http.ResponseWriter) {
 func (i *Interaction) Respond(resp InteractionResponse) error {
 	i.ResponseWriter.Header().Set("Content-Type", "application/json")
 	return json.NewEncoder(i.ResponseWriter).Encode(resp)
+}
+
+func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reader) error {
+	if len(resp.Data.Attachments) != len(files) {
+		return errors.New("number of attachment objects doesn't equal number of files")
+	}
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	for i, file := range files {
+		fmt.Println(i)
+		part, _ := writer.CreateFormFile(fmt.Sprintf("[%d]", i), resp.Data.Attachments[i].Filename)
+		io.Copy(part, file)
+	}
+
+	field, _ := writer.CreateFormField("payload_json")
+	if err := json.NewEncoder(field).Encode(resp); err != nil {
+		return err
+	}
+
+	writer.Close()
+	fmt.Println(body.String())
+
+	i.ResponseWriter.Header().Set("Content-Type", writer.FormDataContentType())
+	if _, err := body.WriteTo(i.ResponseWriter); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (i Interaction) ApplicationCommandData() *ApplicationCommandInteractionData {

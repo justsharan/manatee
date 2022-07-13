@@ -53,6 +53,7 @@ type AllowedMentions struct {
 type Attachment struct {
 	Filename    string `json:"filename"`
 	Description string `json:"description"`
+	ID          uint8  `json:"id"`
 }
 
 type MessageFlags uint8
