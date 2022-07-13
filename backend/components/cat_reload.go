@@ -34,7 +34,7 @@ func catReload(i *types.Interaction, data *types.MessageComponentInteractionData
 	}
 
 	err = i.Respond(types.InteractionResponse{
-		Type: types.ResponseChannelMessageWithSource,
+		Type: types.ResponseUpdateMessage,
 		Data: types.ResponseData{
 			Content: details[0].URL,
 			Components: []interface{}{
