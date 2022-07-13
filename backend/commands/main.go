@@ -17,5 +17,7 @@ func HandleCommands(w http.ResponseWriter, i *types.Interaction) {
 		movie(i, data)
 	case "trivia":
 		trivia(i, data)
+	case "weather":
+		weather(i, data)
 	}
 }
