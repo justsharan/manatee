@@ -18,26 +18,18 @@ type CatDetails struct {
 func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	resp, err := http.Get("https://api.thecatapi.com/v1/images/search")
 	if err != nil {
-		i.Respond(types.InteractionResponse{
-			Type: types.ResponseChannelMessageWithSource,
-			Data: types.ResponseData{
-				Content: "Error finding a cat.",
-				Flags:   types.FlagEphemeral,
-			},
-		})
+		fmt.Println(err)
+		i.Error("Error finding a cat.")
+		return
 	}
 
 	var details []CatDetails
 
 	defer resp.Body.Close()
 	if err = json.NewDecoder(resp.Body).Decode(&details); err != nil {
-		i.Respond(types.InteractionResponse{
-			Type: types.ResponseChannelMessageWithSource,
-			Data: types.ResponseData{
-				Content: "Error finding a cat.",
-				Flags:   types.FlagEphemeral,
-			},
-		})
+		fmt.Println(err)
+		i.Error("Error finding a cat.")
+		return
 	}
 
 	err = i.Respond(types.InteractionResponse{
