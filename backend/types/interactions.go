@@ -124,6 +124,15 @@ type ApplicationCommandInteractionData struct {
 	TargetID Snowflake                                 `json:"target_id"`
 }
 
+func (data ApplicationCommandInteractionData) GetOption(name string) (ApplicationCommandInteractionDataOption, error) {
+	for _, option := range data.Options {
+		if option.Name == name {
+			return option, nil
+		}
+	}
+	return ApplicationCommandInteractionDataOption{}, errors.New("no option found by that name")
+}
+
 type CommandType uint8
 
 const (
@@ -147,6 +156,14 @@ type ApplicationCommandInteractionDataOption struct {
 	Value   interface{}                                `json:"value,omitempty"`
 	Options []*ApplicationCommandInteractionDataOption `json:"options,omitempty"`
 	Focused bool                                       `json:"focused,omitempty"`
+}
+
+func (opt ApplicationCommandInteractionDataOption) StringValue() string {
+	return opt.Value.(string)
+}
+
+func (opt ApplicationCommandInteractionDataOption) IntValue() uint {
+	return opt.Value.(uint)
 }
 
 type OptionType uint8

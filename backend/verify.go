@@ -22,7 +22,7 @@ func verify(r *http.Request) bool {
 		return false
 	}
 
-	key, err := hex.DecodeString(*publicKey)
+	key, err := hex.DecodeString(publicKey)
 	if err != nil {
 		return false
 	}
