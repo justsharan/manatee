@@ -1,22 +1,58 @@
 package types
 
+import (
+	"encoding/json"
+	"net/http"
+)
+
 type Snowflake string
 
 type Interaction struct {
-	ID             Snowflake       `json:"id"`
-	ApplicationID  Snowflake       `json:"application_id"`
-	Type           InteractionType `json:"type"`
-	Data           interface{}     `json:"data"`
-	GuildID        Snowflake       `json:"guild_id"`
-	ChannelID      Snowflake       `json:"channel_id"`
-	Member         interface{}     `json:"member"`
-	User           User            `json:"user"`
-	Token          string          `json:"token"`
-	Version        uint8           `json:"version"`
-	Message        interface{}     `json:"message"`
-	AppPermissions uint64          `json:"app_permissions,string"`
-	Locale         string          `json:"locale"`
-	GuildLocale    string          `json:"guild_locale"`
+	ID             Snowflake              `json:"id"`
+	ApplicationID  Snowflake              `json:"application_id"`
+	Type           InteractionType        `json:"type"`
+	Data           map[string]interface{} `json:"data"`
+	GuildID        Snowflake              `json:"guild_id"`
+	ChannelID      Snowflake              `json:"channel_id"`
+	Member         interface{}            `json:"member"`
+	User           User                   `json:"user"`
+	Token          string                 `json:"token"`
+	Version        uint8                  `json:"version"`
+	Message        interface{}            `json:"message"`
+	AppPermissions uint64                 `json:"app_permissions,string"`
+	Locale         string                 `json:"locale"`
+	GuildLocale    string                 `json:"guild_locale"`
+	ResponseWriter http.ResponseWriter    `json:"-"`
+}
+
+func (i *Interaction) SetResponseWriter(w http.ResponseWriter) {
+	i.ResponseWriter = w
+}
+
+func (i *Interaction) Respond(resp InteractionResponse) error {
+	i.ResponseWriter.Header().Set("Content-Type", "application/json")
+	return json.NewEncoder(i.ResponseWriter).Encode(resp)
+}
+
+func (i Interaction) ApplicationCommandData() *ApplicationCommandInteractionData {
+	data, _ := json.Marshal(i.Data)
+	var res ApplicationCommandInteractionData
+	_ = json.Unmarshal(data, &res)
+	return &res
+}
+
+func (i Interaction) MessageComponentData() *MessageComponentInteractionData {
+	data, _ := json.Marshal(i.Data)
+	var res MessageComponentInteractionData
+	_ = json.Unmarshal(data, &res)
+	return &res
+}
+
+func (i Interaction) ModalSubmitData() *ModalSubmitInteractionData {
+	data, _ := json.Marshal(i.Data)
+	var res ModalSubmitInteractionData
+	_ = json.Unmarshal(data, &res)
+	return &res
 }
 
 type InteractionType uint8
@@ -109,12 +145,12 @@ const (
 )
 
 type ResponseData struct {
-	TTS             bool            `json:"tts"`
-	Content         string          `json:"content"`
-	Components      []interface{}   `json:"components"`
-	Embeds          []*Embed        `json:"embeds"`
+	TTS             bool            `json:"tts,omitempty"`
+	Content         string          `json:"content,omitempty"`
+	Components      []interface{}   `json:"components,omitempty"`
+	Embeds          []*Embed        `json:"embeds,omitempty"`
 	AllowedMentions AllowedMentions `json:"allowed_mentions,omitempty"`
-	Attachments     []Attachment    `json:"attachments"`
+	Attachments     []Attachment    `json:"attachments,omitempty"`
 	Flags           MessageFlags    `json:"flags,omitempty"`
 	Choices         []*OptionChoice `json:"choices,omitempty"`
 	CustomID        string          `json:"custom_id,omitempty"`

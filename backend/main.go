@@ -50,7 +50,7 @@ func interactions(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 	case types.InteractionApplicationCommand:
-		commands.HandleCommands(w, data)
+		commands.HandleCommands(w, &data)
 	}
 
 }
