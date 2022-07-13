@@ -21,7 +21,6 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
-			Flags: types.FlagEphemeral,
 			Attachments: []types.Attachment{{
 				Filename:    "cat.jpg",
 				Description: "A cute little kitty",
