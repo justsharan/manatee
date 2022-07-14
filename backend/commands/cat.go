@@ -8,11 +8,8 @@ import (
 )
 
 type CatDetails struct {
-	Breeds []string `json:"breeds"`
-	ID     string   `json:"id"`
-	URL    string   `json:"url"`
-	Width  uint     `json:"width"`
-	Height uint     `json:"height"`
+	ID  string `json:"id"`
+	URL string `json:"url"`
 }
 
 func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {

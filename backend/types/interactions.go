@@ -146,8 +146,8 @@ type ApplicationCommandInteractionDataResolved struct {
 	Members     map[string]interface{} `json:"members"`
 	Roles       map[string]interface{} `json:"roles"`
 	Channels    map[string]interface{} `json:"channels"`
-	Messages    map[string]interface{} `json:"messages"`
-	Attachments map[string]interface{} `json:"attachments"`
+	Messages    map[string]*Message    `json:"messages"`
+	Attachments map[string]*Attachment `json:"attachments"`
 }
 
 type ApplicationCommandInteractionDataOption struct {

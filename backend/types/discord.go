@@ -51,9 +51,16 @@ type AllowedMentions struct {
 }
 
 type Attachment struct {
-	Filename    string `json:"filename"`
-	Description string `json:"description"`
-	ID          uint8  `json:"id"`
+	ContentType string `json:"content_type,omitempty"`
+	Ephemeral   bool   `json:"ephemeral,omitempty"`
+	Description string `json:"description,omitempty"`
+	Filename    string `json:"filename,omitempty"`
+	Height      int    `json:"height,omitempty"`
+	ID          string `json:"id,omitempty"`
+	ProxyURL    string `json:"proxy_url,omitempty"`
+	Size        int    `json:"size,omitempty"`
+	URL         string `json:"url,omitempty"`
+	Width       int    `json:"width,omitempty"`
 }
 
 type MessageFlags uint8
