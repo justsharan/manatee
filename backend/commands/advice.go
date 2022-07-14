@@ -17,6 +17,7 @@ type Slip struct {
 }
 
 func advice(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
+	// Retrieve advice
 	resp, err := http.Get("https://api.adviceslip.com/advice")
 	if err != nil {
 		fmt.Println(err)
@@ -24,11 +25,12 @@ func advice(i *types.Interaction, data *types.ApplicationCommandInteractionData)
 		return
 	}
 
+	// Get advice data
 	defer resp.Body.Close()
-
 	var advice Advice
 	json.NewDecoder(resp.Body).Decode(&advice)
 
+	// Respond with advice
 	i.Respond(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{

@@ -89,6 +89,7 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 		searchURL = fmt.Sprintf("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s&year=%f", tmdb_key, query, year.IntValue())
 	}
 
+	// Search for movie
 	searchResp, err := http.Get(searchURL)
 	if err != nil {
 		fmt.Println(err)
@@ -96,6 +97,7 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 		return
 	}
 
+	// Get search data
 	defer searchResp.Body.Close()
 	var searchData SearchResult
 	if err = json.NewDecoder(searchResp.Body).Decode(&searchData); err != nil {
@@ -104,12 +106,14 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 		return
 	}
 
+	// Show error if no movie is found
 	if searchData.TotalResults == 0 {
 		fmt.Println(searchURL)
 		i.Error("I didn't find any movie by that name.")
 		return
 	}
 
+	// Retrieve movie
 	movieResp, err := http.Get(fmt.Sprintf("https://api.themoviedb.org/3/movie/%d?api_key=%s", searchData.Results[0].ID, tmdb_key))
 	if err != nil {
 		fmt.Println(err)
@@ -117,6 +121,7 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 		return
 	}
 
+	// Get movie data
 	defer movieResp.Body.Close()
 	var movie Movie
 	if err = json.NewDecoder(movieResp.Body).Decode(&movie); err != nil {
@@ -125,6 +130,7 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 		return
 	}
 
+	// Respond with movie data
 	i.Respond(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{

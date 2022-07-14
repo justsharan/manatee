@@ -133,6 +133,7 @@ type WeatherData struct {
 }
 
 func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
+	// Retrieve weather data from API
 	location, _ := data.GetOption("location")
 	resp, err := http.Get(fmt.Sprintf("https://api.weatherapi.com/v1/forecast.json?key=%s&days=1&q=%s", weather_key, url.QueryEscape(location.StringValue())))
 	if err != nil {
@@ -141,6 +142,7 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 		return
 	}
 
+	// Get weather data
 	defer resp.Body.Close()
 	var weather WeatherData
 	if err = json.NewDecoder(resp.Body).Decode(&weather); err != nil {
@@ -151,6 +153,7 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 
 	units, unitsErr := data.GetOption("units")
 
+	// Basic embed
 	embed := types.Embed{
 		URL: fmt.Sprintf("https://darksky.net/forecast/%f,%f/", weather.Location.Lat, weather.Location.Lon),
 		Thumbnail: types.EmbedImage{
@@ -193,9 +196,11 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 		},
 	}
 
+	// Shortcuts for rain and snow data
 	rainChance := weather.Forecast.Forecastday[0].Day.DailyChanceOfRain
 	snowChance := weather.Forecast.Forecastday[0].Day.DailyChanceOfSnow
 
+	// Add rain/snow warnings as appropriate
 	if rainChance > 0 {
 		embed.Description = fmt.Sprintf("There is a %d%% chance of rain", rainChance)
 		if snowChance > 0 {
@@ -207,6 +212,7 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 		embed.Description = fmt.Sprintf("There is a %d%% chance of snow.", snowChance)
 	}
 
+	// Add imperial/metric data where appropriate
 	if (unitsErr == nil && units.StringValue() == "metric") || weather.Location.Country != "United States of America" {
 		embed.Title = fmt.Sprintf("%.1f°C, %s", weather.Current.TempC, weather.Current.Condition.Text)
 		embed.Fields[3].Value = fmt.Sprintf("%.1f kph %s", weather.Current.WindKph, weather.Current.WindDir)
@@ -217,6 +223,7 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 		embed.Fields[5].Value = fmt.Sprintf("%.1f mi", weather.Current.VisMiles)
 	}
 
+	// Respond with weather data
 	i.Respond(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
@@ -226,6 +233,7 @@ func weather(i *types.Interaction, data *types.ApplicationCommandInteractionData
 
 }
 
+// Format sunset emoji with the right moon phase
 func moonPhaseEmoji(phase string) string {
 	phase = strings.ToLower(phase)
 	if strings.Contains(phase, "moon") {

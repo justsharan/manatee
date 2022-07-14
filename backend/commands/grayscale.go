@@ -24,6 +24,7 @@ func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionDa
 		return
 	}
 
+	// Read the contents of the image
 	defer resp.Body.Close()
 	img, _, err := image.Decode(resp.Body)
 	if err != nil {
@@ -32,12 +33,15 @@ func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionDa
 		return
 	}
 
+	// Convert image to grayscale
 	grayscaled := image.NewGray(img.Bounds())
 	draw.Draw(grayscaled, grayscaled.Bounds(), img, img.Bounds().Min, draw.Src)
 
+	// Get raw bytes of grayscaled image
 	res := new(bytes.Buffer)
 	png.Encode(res, grayscaled)
 
+	// Respond with grayscaled image
 	err = i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{

@@ -13,6 +13,7 @@ type CatDetails struct {
 }
 
 func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
+	// Retrieve cat
 	resp, err := http.Get("https://api.thecatapi.com/v1/images/search")
 	if err != nil {
 		fmt.Println(err)
@@ -20,8 +21,8 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 		return
 	}
 
+	// Get cat data
 	var details []CatDetails
-
 	defer resp.Body.Close()
 	if err = json.NewDecoder(resp.Body).Decode(&details); err != nil {
 		fmt.Println(err)
@@ -29,6 +30,7 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 		return
 	}
 
+	// Respond with cat image URL
 	err = i.Respond(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
@@ -49,7 +51,6 @@ func cat(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 			},
 		},
 	})
-
 	if err != nil {
 		fmt.Println(err)
 	}
