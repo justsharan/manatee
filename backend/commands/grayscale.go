@@ -6,10 +6,18 @@ import (
 	"fmt"
 	"image"
 	"image/draw"
+	"image/gif"
+	"image/jpeg"
 	"image/png"
 	"io"
 	"net/http"
 )
+
+func init() {
+	image.RegisterFormat("jpeg", "jpeg", jpeg.Decode, jpeg.DecodeConfig)
+	image.RegisterFormat("gif", "gif", gif.Decode, gif.DecodeConfig)
+	image.RegisterFormat("png", "png", png.Decode, png.DecodeConfig)
+}
 
 func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	// Get link to the attachment
