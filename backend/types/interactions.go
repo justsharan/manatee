@@ -49,7 +49,7 @@ func (i *Interaction) Error(message string) error {
 	})
 }
 
-func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reader) error {
+func (i *Interaction) RespondWithFile(resp InteractionResponse, files []*bytes.Buffer) error {
 	if len(resp.Data.Attachments) != len(files) {
 		return errors.New("number of attachment objects doesn't equal number of files")
 	}
@@ -58,7 +58,6 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reade
 	writer := multipart.NewWriter(body)
 
 	for i, file := range files {
-		fmt.Println(i)
 		part, _ := writer.CreateFormFile(fmt.Sprintf("files[%d]", i), resp.Data.Attachments[i].Filename)
 		io.Copy(part, file)
 	}
@@ -69,17 +68,12 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []io.Reade
 	}
 
 	writer.Close()
-
-	_, err := http.Post(
-		fmt.Sprintf("https://discord.com/api/v10/interactions/%s/%s/callback", i.ID, i.Token),
-		writer.FormDataContentType(),
-		body,
-	)
-	if err != nil {
+	i.ResponseWriter.WriteHeader(200)
+	i.ResponseWriter.Header().Set("Content-Type", writer.FormDataContentType())
+	if _, err := i.ResponseWriter.Write(body.Bytes()); err != nil {
 		return err
 	}
 
-	i.ResponseWriter.WriteHeader(200)
 	return nil
 }
 

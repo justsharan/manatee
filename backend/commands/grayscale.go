@@ -9,7 +9,6 @@ import (
 	"image/gif"
 	"image/jpeg"
 	"image/png"
-	"io"
 	"net/http"
 )
 
@@ -60,7 +59,7 @@ func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionDa
 				ID:          "0",
 			}},
 		},
-	}, []io.Reader{res})
+	}, []*bytes.Buffer{res})
 	if err != nil {
 		fmt.Println(err)
 	}
