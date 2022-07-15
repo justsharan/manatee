@@ -69,8 +69,9 @@ func (i *Interaction) RespondWithFile(resp InteractionResponse, files []*bytes.B
 
 	writer.Close()
 	i.ResponseWriter.WriteHeader(200)
-	i.ResponseWriter.Header().Set("Content-Type", writer.FormDataContentType())
-	if _, err := i.ResponseWriter.Write(body.Bytes()); err != nil {
+
+	url := fmt.Sprintf("https://discord.com/api/v10/interactions/%s/%s/callback", i.ID, i.Token)
+	if _, err := http.Post(url, writer.FormDataContentType(), body); err != nil {
 		return err
 	}
 
