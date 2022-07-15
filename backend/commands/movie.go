@@ -108,13 +108,12 @@ func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 
 	// Show error if no movie is found
 	if searchData.TotalResults == 0 {
-		fmt.Println(searchURL)
 		i.Error("I didn't find any movie by that name.")
 		return
 	}
 
 	// Retrieve movie
-	movieResp, err := http.Get(fmt.Sprintf("https://api.themoviedb.org/3/movie/%d?api_key=%s", searchData.Results[0].ID, tmdb_key))
+	movieResp, err := http.Get(fmt.Sprintf("https://api.themoviedb.org/3/movie/%d?api_key=%s&language=%s", searchData.Results[0].ID, tmdb_key, i.GuildLocale))
 	if err != nil {
 		fmt.Println(err)
 		i.Error("Error finding details about that movie.")
