@@ -11,6 +11,8 @@ func HandleCommands(w http.ResponseWriter, i *types.Interaction) {
 	switch data.Name {
 	case "advice":
 		advice(i, data)
+	case "blur":
+		blur(i, data)
 	case "cat":
 		cat(i, data)
 	case "grayscale":
