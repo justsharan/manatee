@@ -5,11 +5,12 @@ import (
 	"bytes"
 	"fmt"
 	"image"
-	"image/color"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"net/http"
+
+	"github.com/disintegration/gift"
 )
 
 func init() {
@@ -42,14 +43,8 @@ func sepia(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 
 	// Convert image to sepia
 	sepia := image.NewRGBA(img.Bounds())
-	for x := 0; x < img.Bounds().Max.X; x++ {
-		for y := 0; y < img.Bounds().Max.Y; y++ {
-			R, G, B, _ := img.At(x, y).RGBA()
-			brightness := uint8((0.34 * float64(R)) + (0.5 * float64(G)) + (0.16 * float64(B)))
-			sepiaColor := color.RGBA{R: brightness + 100, G: brightness + 50, B: brightness}
-			sepia.SetRGBA(x, y, sepiaColor)
-		}
-	}
+	g := gift.New(gift.Sepia(100))
+	g.Draw(sepia, img)
 
 	// Get raw bytes of sepia image
 	res := new(bytes.Buffer)
