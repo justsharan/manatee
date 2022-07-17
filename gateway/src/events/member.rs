@@ -6,9 +6,9 @@ use twilight_model::{
 };
 
 pub async fn guild_member_add(ctx: Context, member: Member) -> Result<(), sqlx::Error> {
-  println!("Member joined: {}", member.user.id);
-
   let guild_id = member.guild_id.get().to_string();
+
+  // Get database entry
   let guilds = sqlx::query!("SELECT autorole, member_log FROM guilds WHERE id = $1;", guild_id)
     .fetch_all(&ctx.pool)
     .await?;
@@ -58,6 +58,8 @@ pub async fn guild_member_add(ctx: Context, member: Member) -> Result<(), sqlx::
 
 pub async fn guild_member_remove(ctx: Context, payload: MemberRemove) -> Result<(), sqlx::Error> {
   let guild_id = payload.guild_id.get().to_string();
+
+  // Get database entry
   let guilds = sqlx::query!("SELECT member_log FROM guilds WHERE id = $1;", guild_id)
     .fetch_all(&ctx.pool)
     .await?;

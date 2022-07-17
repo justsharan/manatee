@@ -18,7 +18,7 @@ pub struct ContextValue {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     let token = env::var("DISCORD_TOKEN")?;
-    let intents = Intents::GUILDS | Intents::GUILD_MEMBERS;
+    let intents = Intents::GUILDS | Intents::GUILD_MEMBERS | Intents::GUILD_MESSAGES;
 
     let (shard, mut events) = Shard::new(token.clone(), intents);
     let cache = InMemoryCache::new();

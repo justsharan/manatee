@@ -3,6 +3,7 @@ use twilight_gateway::Event;
 
 mod guild;
 mod member;
+mod message;
 
 pub async fn handle_events(ctx: Context, event: Event) -> Result<(), sqlx::Error> {
   match event {
@@ -10,6 +11,7 @@ pub async fn handle_events(ctx: Context, event: Event) -> Result<(), sqlx::Error
     Event::GuildDelete(guild_delete) => guild::guild_delete(ctx, *guild_delete).await,
     Event::MemberAdd(member_add) => member::guild_member_add(ctx, member_add.0).await,
     Event::MemberRemove(member_remove) => member::guild_member_remove(ctx, member_remove).await,
+    Event::MessageDelete(message_delete) => message::message_delete(ctx, message_delete).await,
     _ => {
       println!("Unhandled event: {}", event.kind().name().unwrap_or("UNKNOWN"));
       Ok(())
