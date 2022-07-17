@@ -54,10 +54,9 @@ func blur(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	err = i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
-			Content: "Here's your blurred image.",
 			Attachments: []types.Attachment{{
-				Filename:    "grayscaled.png",
-				Description: "Your image with a blur filter",
+				Filename:    "blurred.png",
+				Description: "Your image but blurred",
 				ID:          "0",
 			}},
 		},

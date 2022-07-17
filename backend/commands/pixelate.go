@@ -5,11 +5,12 @@ import (
 	"bytes"
 	"fmt"
 	"image"
-	"image/draw"
 	"image/gif"
 	"image/jpeg"
 	"image/png"
 	"net/http"
+
+	"github.com/disintegration/gift"
 )
 
 func init() {
@@ -18,7 +19,7 @@ func init() {
 	image.RegisterFormat("png", "png", png.Decode, png.DecodeConfig)
 }
 
-func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
+func pixelate(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	// Get link to the attachment
 	attachedID, _ := data.GetOption("image")
 	attachment := data.Resolved.Attachments[attachedID.StringValue()].URL
@@ -40,21 +41,22 @@ func grayscale(i *types.Interaction, data *types.ApplicationCommandInteractionDa
 		return
 	}
 
-	// Convert image to grayscale
-	grayscaled := image.NewGray(img.Bounds())
-	draw.Draw(grayscaled, grayscaled.Bounds(), img, img.Bounds().Min, draw.Src)
+	// Pixelate image
+	pixelated := image.NewRGBA(img.Bounds())
+	g := gift.New(gift.Pixelate(5))
+	g.Draw(pixelated, img)
 
-	// Get raw bytes of grayscaled image
+	// Get raw bytes of pixelated image
 	res := new(bytes.Buffer)
-	png.Encode(res, grayscaled)
+	png.Encode(res, pixelated)
 
-	// Respond with grayscaled image
+	// Respond with pixelated image
 	err = i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
 			Attachments: []types.Attachment{{
-				Filename:    "grayscaled.png",
-				Description: "Your image with a grayscale filter",
+				Filename:    "pixelated.png",
+				Description: "Your image but pixelated",
 				ID:          "0",
 			}},
 		},

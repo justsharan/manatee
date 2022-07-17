@@ -54,7 +54,6 @@ func sepia(i *types.Interaction, data *types.ApplicationCommandInteractionData) 
 	err = i.RespondWithFile(types.InteractionResponse{
 		Type: types.ResponseChannelMessageWithSource,
 		Data: types.ResponseData{
-			Content: "Here's your image with a sepia filter.",
 			Attachments: []types.Attachment{{
 				Filename:    "sepia.png",
 				Description: "Your image with a sepia filter",
