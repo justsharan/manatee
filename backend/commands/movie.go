@@ -15,65 +15,31 @@ var tmdb_key = os.Getenv("TMDB_KEY")
 type SearchResult struct {
 	Page    int `json:"page"`
 	Results []struct {
-		PosterPath       string  `json:"poster_path"`
-		Adult            bool    `json:"adult"`
-		Overview         string  `json:"overview"`
-		ReleaseDate      string  `json:"release_date"`
-		GenreIds         []int   `json:"genre_ids"`
-		ID               int     `json:"id"`
-		OriginalTitle    string  `json:"original_title"`
-		OriginalLanguage string  `json:"original_language"`
-		Title            string  `json:"title"`
-		BackdropPath     string  `json:"backdrop_path"`
-		Popularity       float64 `json:"popularity"`
-		VoteCount        int     `json:"vote_count"`
-		Video            bool    `json:"video"`
-		VoteAverage      float64 `json:"vote_average"`
+		ID int `json:"id"`
 	} `json:"results"`
 	TotalResults int `json:"total_results"`
 	TotalPages   int `json:"total_pages"`
 }
 
 type Movie struct {
-	Adult               bool        `json:"adult"`
-	BackdropPath        string      `json:"backdrop_path"`
-	BelongsToCollection interface{} `json:"belongs_to_collection"`
-	Budget              int         `json:"budget"`
-	Genres              []struct {
+	Adult        bool   `json:"adult"`
+	BackdropPath string `json:"backdrop_path"`
+	Genres       []struct {
 		ID   int    `json:"id"`
 		Name string `json:"name"`
 	} `json:"genres"`
-	Homepage            string  `json:"homepage"`
-	ID                  int     `json:"id"`
-	ImdbID              string  `json:"imdb_id"`
-	OriginalLanguage    string  `json:"original_language"`
-	OriginalTitle       string  `json:"original_title"`
-	Overview            string  `json:"overview"`
-	Popularity          float64 `json:"popularity"`
-	PosterPath          string  `json:"poster_path,omitempty"`
-	ProductionCompanies []struct {
-		ID            int    `json:"id"`
-		LogoPath      string `json:"logo_path"`
-		Name          string `json:"name"`
-		OriginCountry string `json:"origin_country"`
-	} `json:"production_companies"`
-	ProductionCountries []struct {
-		Iso31661 string `json:"iso_3166_1"`
-		Name     string `json:"name"`
-	} `json:"production_countries"`
-	ReleaseDate     string `json:"release_date"`
-	Revenue         int    `json:"revenue"`
-	Runtime         int    `json:"runtime"`
-	SpokenLanguages []struct {
-		Iso6391 string `json:"iso_639_1"`
-		Name    string `json:"name"`
-	} `json:"spoken_languages"`
-	Status      string  `json:"status"`
-	Tagline     string  `json:"tagline"`
-	Title       string  `json:"title"`
-	Video       bool    `json:"video"`
-	VoteAverage float64 `json:"vote_average"`
-	VoteCount   int     `json:"vote_count"`
+	ID               int     `json:"id"`
+	ImdbID           string  `json:"imdb_id"`
+	OriginalLanguage string  `json:"original_language"`
+	OriginalTitle    string  `json:"original_title"`
+	Overview         string  `json:"overview"`
+	Popularity       float64 `json:"popularity"`
+	PosterPath       string  `json:"poster_path,omitempty"`
+	ReleaseDate      string  `json:"release_date"`
+	Revenue          int     `json:"revenue"`
+	Runtime          int     `json:"runtime"`
+	Tagline          string  `json:"tagline"`
+	Title            string  `json:"title"`
 }
 
 func movie(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
