@@ -10,7 +10,7 @@ import (
 	"image/png"
 	"net/http"
 
-	"github.com/esimov/stackblur-go"
+	"github.com/disintegration/gift"
 )
 
 func init() {
@@ -42,12 +42,9 @@ func blur(i *types.Interaction, data *types.ApplicationCommandInteractionData) {
 	}
 
 	// Blur image
-	blurred, err := stackblur.Process(img, 10)
-	if err != nil {
-		fmt.Println(err)
-		i.Error("Error blurring image")
-		return
-	}
+	blurred := image.NewRGBA(img.Bounds())
+	g := gift.New(gift.GaussianBlur(5))
+	g.Draw(blurred, img)
 
 	// Get raw bytes of blurred image
 	res := new(bytes.Buffer)
