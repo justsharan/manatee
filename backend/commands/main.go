@@ -19,6 +19,8 @@ func HandleCommands(w http.ResponseWriter, i *types.Interaction) {
 		grayscale(i, data)
 	case "movie":
 		movie(i, data)
+	case "sepia":
+		sepia(i, data)
 	case "trivia":
 		trivia(i, data)
 	case "weather":
