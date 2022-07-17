@@ -10,3 +10,4 @@ tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 twilight-gateway = "0.9"
 twilight-http = "0.9"
 twilight-model = "0.9"
+twilight-cache-inmemory = "0.9"

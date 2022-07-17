@@ -64,16 +64,25 @@ pub async fn guild_member_remove(ctx: Context, payload: MemberRemove) -> Result<
 
   // Send member log if enabled
   if guilds[0].member_log.is_some() {
+    let content = match ctx.cache.member(payload.guild_id, payload.user.id) {
+      Some(val) => format!(
+        "📤 **{}#{}** ({}) has left the server.\nJoined: <t:{}>",
+        payload.user.name,
+        payload.user.discriminator().to_string(),
+        payload.user.id.get().to_string(),
+        val.joined_at().as_secs()
+      ),
+      None => format!(
+        "📤 **{}#{}** ({}) has left the server.\nAccount created: <t:{}>",
+        payload.user.name,
+        payload.user.discriminator().to_string(),
+        payload.user.id.get().to_string(),
+        ((payload.user.id.get() >> 22) + 1420070400000) / 1000
+      )
+    };
+
     let res = ctx.http.create_message(Id::new(guilds[0].member_log.as_ref().unwrap().parse::<u64>().unwrap()))
-      .content(
-        &format!(
-          "📤 **{}#{}** ({}) has left the server.\nAccount created: <t:{}>",
-          payload.user.name,
-          payload.user.discriminator().to_string(),
-          payload.user.id.get().to_string(),
-          ((payload.user.id.get() >> 22) + 1420070400000) / 1000
-        )
-      ).unwrap().exec().await;
+      .content(content.as_str()).unwrap().exec().await;
     // Remove member_log from entry if unable to send messages to it
     if !res.is_ok() {
       sqlx::query!("UPDATE guilds SET member_log = NULL WHERE id = $1;", guild_id)
