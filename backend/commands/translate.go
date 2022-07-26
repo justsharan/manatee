@@ -24,7 +24,7 @@ func translate(i *types.Interaction, data *types.ApplicationCommandInteractionDa
 	text := data.Resolved.Messages[string(data.TargetID)].Content
 	lang := i.Locale
 
-	resp, err := http.Get(fmt.Sprintf("https://bingtrans.vercel.app/api/?lang=%s&text=%s", lang, url.QueryEscape(text)))
+	resp, err := http.Get(fmt.Sprintf("https://bingtrans.vercel.app/api/?lang=%s&text=%s", lang[0:2], url.QueryEscape(text)))
 	if err != nil || resp.StatusCode != http.StatusOK {
 		i.Error("Couldn't translate message")
 	}
