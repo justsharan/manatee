@@ -17,6 +17,10 @@ func HandleCommands(w http.ResponseWriter, i *types.Interaction) {
 		cat(i, data)
 	case "grayscale":
 		grayscale(i, data)
+	case "ip":
+		ip(i, data)
+	case "map":
+		googleMap(i, data)
 	case "movie":
 		movie(i, data)
 	case "pixelate":
