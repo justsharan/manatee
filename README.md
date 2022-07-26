@@ -1,6 +1,6 @@
 # Manatee (WIP)
 
-This is the codebase for a future, distributed version of Manatee, a bot serving over 900+ communities on Discord.
+This is the codebase for a future, distributed version of Manatee, a bot serving over 1000+ communities on Discord.
 
 ### What's wrong with the original?
 
