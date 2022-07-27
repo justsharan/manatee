@@ -1,0 +1,33 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.list fieldset {
+  background-color: #2f3136;
+  border: 0.5px solid;
+  border-radius: 5px;
+  padding: 0.5em;
+}
+
+.list ul {
+  list-style-type: none;
+}
+
+.header h3 {
+  margin: 0;
+}
+
+.list span {
+  font-size: 0.75em;
+  font-weight: normal;
+  margin: 0 0.25em;
+}
+
+.header span {
+  background-color: #202225;
+  padding: 0.25em;
+  border-radius: 5px;
+  cursor: default;
+}
