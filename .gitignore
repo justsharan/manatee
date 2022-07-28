@@ -5,4 +5,4 @@ dist
 .next
 target
 .DS_Store
-cmd.json
+dashboard/public/cmds.json
