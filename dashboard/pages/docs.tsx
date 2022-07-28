@@ -1,6 +1,7 @@
 import { GetStaticPropsContext } from "next";
 import Layout from "components/Layout";
 import styles from "./docs.module.css";
+import { useTranslations } from "next-intl";
 
 type CommandInfo = {
   id: string;
@@ -17,8 +18,9 @@ type CommandInfo = {
 };
 
 export default function Docs({ cmds }: { cmds: CommandInfo[] } & object) {
+  const t = useTranslations("Navbar");
   return (
-    <Layout title="Docs">
+    <Layout title={t("docs")}>
       <section className={styles.list}>
         {cmds
           .filter((c) => c.type === 1)

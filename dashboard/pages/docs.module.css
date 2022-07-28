@@ -11,6 +11,10 @@
   padding: 0.5em;
 }
 
+.header {
+  cursor: default;
+}
+
 .list ul {
   list-style-type: none;
 }
@@ -29,5 +33,4 @@
   background-color: #202225;
   padding: 0.25em;
   border-radius: 5px;
-  cursor: default;
 }
