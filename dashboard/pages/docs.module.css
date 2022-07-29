@@ -17,20 +17,25 @@
 
 .list ul {
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.list li p {
+  font-size: 0.8em;
+  margin: 0;
 }
 
 .header h3 {
   margin: 0;
 }
 
-.list span {
+.header span {
+  background-color: #202225;
+  border-radius: 5px;
+  padding: 0.25em;
   font-size: 0.75em;
   font-weight: normal;
   margin: 0 0.25em;
-}
-
-.header span {
-  background-color: #202225;
-  padding: 0.25em;
-  border-radius: 5px;
 }

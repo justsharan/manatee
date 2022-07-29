@@ -20,5 +20,17 @@
     "message_log": "Journal des messages",
     "member_log": "Journal des membres",
     "save": "Enregistrer"
+  },
+  "Docs": {
+    "docs": "Commandes",
+    "3": "string",
+    "4": "entier",
+    "5": "booléen",
+    "6": "utilisateur",
+    "7": "salon",
+    "8": "rôle",
+    "9": "mention",
+    "10": "nombre",
+    "11": "fichier"
   }
 }

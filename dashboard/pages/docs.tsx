@@ -23,7 +23,7 @@ type CommandInfo = {
 };
 
 export default function Docs({ cmds }: { cmds: CommandInfo[] } & object) {
-  const t = useTranslations("Navbar");
+  const t = useTranslations("Docs");
   const { locale, defaultLocale } = useRouter();
   return (
     <Layout title={t("docs")}>
@@ -51,6 +51,25 @@ export default function Docs({ cmds }: { cmds: CommandInfo[] } & object) {
               {locale === defaultLocale
                 ? cmd.description
                 : cmd.description_localizations[locale]}
+              {cmd.options && (
+                <ul>
+                  {cmd.options.map((o) => (
+                    <li key={o.name}>
+                      <span>
+                        {locale === defaultLocale
+                          ? o.name
+                          : o.name_localizations[locale]}
+                      </span>{" "}
+                      <code>{t(String(o.type))}</code>
+                      <p>
+                        {locale === defaultLocale
+                          ? o.description
+                          : o.description_localizations[locale]}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </fieldset>
           ))}
       </section>

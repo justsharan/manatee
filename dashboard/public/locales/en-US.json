@@ -20,5 +20,17 @@
     "message_log": "Message Log",
     "member_log": "Member Log",
     "save": "Save"
+  },
+  "Docs": {
+    "docs": "Commands",
+    "3": "string",
+    "4": "integer",
+    "5": "boolean",
+    "6": "user",
+    "7": "channel",
+    "8": "role",
+    "9": "mention",
+    "10": "number",
+    "11": "file"
   }
 }
