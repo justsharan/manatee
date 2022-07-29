@@ -82,6 +82,7 @@ function LanguagePicker() {
     >
       <option value="en-US">English</option>
       <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
     </select>
   );
 }

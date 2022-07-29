@@ -34,37 +34,24 @@ export default function Docs({ cmds }: { cmds: CommandInfo[] } & object) {
             <fieldset key={cmd.id}>
               <legend className={styles.header}>
                 <h3>
-                  /
-                  {locale === defaultLocale
-                    ? cmd.name
-                    : cmd.name_localizations[locale]}{" "}
+                  /{cmd.name_localizations[locale] ?? cmd.name}{" "}
                   {cmd.options &&
                     cmd.options.map((o) => (
                       <span key={o.name}>
-                        {locale === defaultLocale
-                          ? o.name
-                          : o.name_localizations[locale]}
+                        {o.name_localizations[locale] ?? o.name}
                       </span>
                     ))}
                 </h3>
               </legend>
-              {locale === defaultLocale
-                ? cmd.description
-                : cmd.description_localizations[locale]}
+              {cmd.description_localizations[locale] ?? cmd.description}
               {cmd.options && (
                 <ul>
                   {cmd.options.map((o) => (
                     <li key={o.name}>
-                      <span>
-                        {locale === defaultLocale
-                          ? o.name
-                          : o.name_localizations[locale]}
-                      </span>{" "}
+                      <span>{o.name_localizations[locale] ?? o.name}</span>{" "}
                       <code>{t(String(o.type))}</code>
                       <p>
-                        {locale === defaultLocale
-                          ? o.description
-                          : o.description_localizations[locale]}
+                        {o.description_localizations[locale] ?? o.description}
                       </p>
                     </li>
                   ))}

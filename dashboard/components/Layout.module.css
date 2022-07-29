@@ -59,6 +59,7 @@
   border: 0px;
   font-size: inherit;
   cursor: pointer;
+  margin: 0;
 }
 
 @media only screen and (max-width: 600px) {
