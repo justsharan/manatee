@@ -15,7 +15,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       messages: (await import(`public/locales/${locale}.json`)).default,
-      parsed: marked(await readFile("../privacy.md", "utf-8")),
+      parsed: marked(await readFile("privacy.md", "utf-8")),
     },
   };
 }

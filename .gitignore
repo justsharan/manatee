@@ -6,3 +6,4 @@ dist
 target
 .DS_Store
 dashboard/public/cmds.json
+dashboard/privacy.md
