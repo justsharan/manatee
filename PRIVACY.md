@@ -7,7 +7,9 @@ This document entails the privacy policy that you accept when adding [Manatee#67
 This section outlines some terms that will be used in the rest of the document.
 
 - **Server Manager**: Anyone with the ability to add Manatee to a server or configure the server's preferences on our dashboard (usually moderators, administrators, and the owner).
+
 - **Server Member**: Anyone who is a member of a server to which Manatee has been added.
+
 - **Service User**: Anyone who authorizes Manatee to obtain additional information on a user other than what's publicly available (typically by using the "Login with Discord" feature on our website).
 
 ## Data Collected By Command

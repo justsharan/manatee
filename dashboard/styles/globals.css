@@ -24,6 +24,10 @@ a {
   box-sizing: border-box;
 }
 
+section a {
+  text-decoration: underline;
+}
+
 .btn {
   background-color: var(--manatee);
   color: var(--not-quite-black);

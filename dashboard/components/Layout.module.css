@@ -46,6 +46,21 @@
   margin: 4em auto;
 }
 
+.footer {
+  font-size: 0.8em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.footer select {
+  appearance: none;
+  background-color: transparent;
+  color: inherit;
+  border: 0px;
+  font-size: inherit;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 600px) {
   .navleft a {
     display: none;

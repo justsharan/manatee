@@ -61,6 +61,27 @@ export default function Layout(props: PropsWithChildren<{ title: string }>) {
         )}
       </nav>
       <main className={styles.content}>{props.children}</main>
+      <footer className={styles.footer}>
+        <Link href="/privacy">Privacy Policy</Link> • <LanguagePicker />
+      </footer>
     </>
+  );
+}
+
+function LanguagePicker() {
+  const router = useRouter();
+  const { pathname, asPath, query } = router;
+  const handleClick = (locale) =>
+    router.push({ pathname, query }, asPath, { locale });
+
+  return (
+    <select
+      onChange={(e) => handleClick(e.target.value)}
+      required
+      defaultValue={router.locale}
+    >
+      <option value="en-US">English</option>
+      <option value="fr">Français</option>
+    </select>
   );
 }
