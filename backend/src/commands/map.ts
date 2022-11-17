@@ -22,19 +22,19 @@ export const options: APIApplicationCommandOption[] = [
     required: false,
     choices: [
       {
-        name: "Roadmap", // @ts-ignore
+        name: "Roadmap",
         value: "roadmap",
       },
       {
-        name: "Satellite", // @ts-ignore
+        name: "Satellite",
         value: "satellite",
       },
       {
-        name: "Terrain", // @ts-ignore
+        name: "Terrain",
         value: "terrain",
       },
       {
-        name: "Hybrid", // @ts-ignore
+        name: "Hybrid",
         value: "hybrid",
       },
     ],
