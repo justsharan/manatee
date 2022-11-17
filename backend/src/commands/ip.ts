@@ -1,9 +1,21 @@
+import {
+  APIApplicationCommandOption,
+  ApplicationCommandOptionType,
+} from "discord-api-types/v10";
 import { CommandInteraction, Embed } from "discord-workers";
 import { Env } from "..";
 import googleMap from "../utils/googleMap";
 
 export const name = "ip";
 export const description = "View information about any public IP address";
+export const options: APIApplicationCommandOption[] = [
+  {
+    name: "address",
+    description: "IPv4 or IPv6 address you want information on",
+    type: ApplicationCommandOptionType.String,
+    required: true,
+  },
+];
 
 export function execute(
   int: CommandInteraction,
@@ -13,7 +25,7 @@ export function execute(
   const func = async () => {
     const ipAddr = int.getOption<string>("address");
     // prettier-ignore
-    const resp = await fetch(`http://ip-api.com/json/${encodeURIComponent(ipAddr!)}&lang=${int.locale}`);
+    const resp = await fetch(`http://ip-api.com/json/${encodeURIComponent(ipAddr!)}?lang=${int.locale}`);
     const body: any = await resp.json();
     if (body.status !== "success")
       return int.send("Couldn't find any information on that IP address.");
@@ -22,7 +34,8 @@ export function execute(
       env.googleMapsKey,
       `${body.lat},${body.lon}`,
       "hybrid",
-      int.locale
+      int.locale,
+      12
     );
 
     const embed = new Embed()
@@ -37,6 +50,7 @@ export function execute(
         }),
         true
       )
+      .setColor(0x2f3136)
       .setImage("attachment://map.png");
 
     return int.send({
