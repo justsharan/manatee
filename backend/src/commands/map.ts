@@ -7,7 +7,7 @@ import { Env } from "..";
 import googleMap from "../utils/googleMap";
 
 export const name = "map";
-export const description = "View any location on a map.";
+export const description = "View any location on a map";
 export const options: APIApplicationCommandOption[] = [
   {
     name: "location",
