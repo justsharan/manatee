@@ -44,5 +44,6 @@ export function execute(
       attachments: [{ name: "map.png", file: map }],
     });
   };
+  ctx.waitUntil(func());
   return Promise.resolve(int.defer());
 }
