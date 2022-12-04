@@ -4,13 +4,13 @@
     "invite": "Inviter",
     "discord": "Discord",
     "signIn": "Se connecter",
-    "signOut": "Déconnexion"
+    "signOut": "Se déconnecter"
   },
   "Home": {
     "tagline": "Un bot Discord génial et simple qui est parfait pour votre serveur."
   },
   "Guilds": {
-    "title": "Bienvenue à Manatee!",
+    "title": "Bienvenue chez Manatee !",
     "subtitle": "Choisissez un serveur."
   },
   "Guild": {
