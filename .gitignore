@@ -1,9 +1,0 @@
-node_modules
-dist
-.env
-.vercel
-.next
-target
-.DS_Store
-dashboard/public/cmds.json
-dashboard/privacy.md
