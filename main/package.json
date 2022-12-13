@@ -9,10 +9,12 @@
     "build": "node_modules/.bin/tsc"
   },
   "devDependencies": {
+    "@types/common-tags": "^1.8.1",
     "@types/node": "^18.11.13",
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "common-tags": "^1.8.2",
     "discord.js": "^14.7.1"
   }
 }

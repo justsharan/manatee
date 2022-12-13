@@ -3,6 +3,7 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
+import { stripIndents } from "common-tags";
 
 const MERRIAM_WEBSTER_URL = "https://www.merriam-webster.com/dictionary";
 const MERRIAM_WEBSTER_ICON =
@@ -30,17 +31,20 @@ export async function execute(interaction: ChatInputCommandInteraction) {
       ephemeral: true,
     });
 
-  if (typeof body[0] === "string") {
+  if (typeof body[0] === "string")
     return interaction.reply({
-      content: `No dictionary entry found for **${term}**.\nDid you mean one of these other words? If so, run </define:${
-        interaction.commandId
-      }> again.\n\n${body.slice(0, 5).join("\n")}`,
+      // prettier-ignore
+      content: stripIndents`
+        No dictionary entry found for **${term}**.
+        Did you mean one of these other words? If so, run </define:${interaction.commandId}> again.
+
+        ${body.slice(0, 5).join("\n")}
+      `,
       ephemeral: true,
     });
-  }
 
   const embed = new EmbedBuilder()
-    .setTitle(formatMerriamStr(body[0].hwi.hw.toUpperCase()))
+    .setTitle(body[0].hwi.hw.toUpperCase().replace(/\*/g, " • "))
     .setDescription(
       body[0].shortdef.map((e: string) => `: ${formatMerriamStr(e)}`).join("\n")
     )
@@ -80,9 +84,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
 const formatMerriamStr = (str: string): string =>
   str
-    .replace(/\*/g, " • ")
-    .replace(/{\/?it}/g, "*")
-    .replace(/{\/w?it?}/g, "*")
+    .replace(/{\/?it}/g, "_")
     .replace(
       /{sc}(\w*){\/sc}/g,
       (e) =>
@@ -103,8 +105,5 @@ const formatMerriamStr = (str: string): string =>
       /{et_link\|(\w*-)\|(\w*-)}/g,
       (_, a, b) => `[${a.toUpperCase()}](${MERRIAM_WEBSTER_URL}/${b || a})`
     )
-    .replace(
-      /{ma}{mat\|(\w*):?\d?\|(\w*):?\d?}{\/ma}/g,
-      (_, a, b) =>
-        `more at [${a.toUpperCase()}](${MERRIAM_WEBSTER_URL}/${b || a})`
-    );
+    .replace(/{ma}.*{\/ma}/g, "")
+    .replace(/\*/g, "\\*");
